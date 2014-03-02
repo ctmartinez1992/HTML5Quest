@@ -12,6 +12,8 @@ GAME 1 - Pong
 
 elevator.mp3; the_big_game.mp3; win.wav; and lose.wav were removed because they are not mine to distribute.
 
+<a href="https://dl.dropboxusercontent.com/u/52790690/HTML5%20GD/game1/default.htm">Link to the game</a>
+
 Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.blogspot.pt">blog</a> and <a href="http://www.youtube.com/channel/UCQ649wgg3_M_C_2HDXkNApQ">channel</a>)<br>
         Programmed in Phaser framework (<a href="http://phaser.io">phaser</a>)<br>
         Drawn in Paint.NET (<a href="http://www.getpaint.net">Paint.NET</a>)<br>
@@ -21,3 +23,20 @@ Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.
         - noirenex (<a href="http://www.freesound.org">Freesound</a>) for the lose condition sound (<a href="http://www.freesound.org/people/noirenex/sounds/159408">Sound</a>)<br>
         - pyzaist (<a href="http://www.freesound.org">Freesound</a>) for the win condition sound (<a href="http://www.freesound.org/people/pyzaist/sounds/118655">Sound</a>)<br>
         - Kevin MacLeod (<a href="http://www.incompetech.com">Incompetech</a>) for the amazing pause song (<a href="http://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300012">Song</a>)
+
+=============
+GAME 2 - Asteroid Field
+=============
+
+everything was created by me.
+
+<a href="https://dl.dropboxusercontent.com/u/52790690/HTML5%20GD/game2/game2/default.htm">Link to the game</a>
+
+Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.blogspot.pt">blog</a> and <a href="http://www.youtube.com/channel/UCQ649wgg3_M_C_2HDXkNApQ">channel</a>)
+        Hosted at Github (<a href="https://github.com/ctmartinez1992/HTML5Quest">github</a>)
+        Programmed in Phaser framework (<a href="http://phaser.io">phaser</a>)
+        Drawn in Paint.NET (<a href="http://www.getpaint.net">Paint.NET</a>)
+        Music created with FL Studio 11 (<a href="http://www.image-line.com/flstudio">FL Studio 11</a>)
+        Sounds done at (<a href="http://www.bfxr.net">Bfxr</a>)
+        Credits to:
+        - Starbound art (<a href="http://playstarbound.com/">Starbound</a>) for some inspiration in the art department (<a href="http://starbound.gamepedia.com/File:Main-page-asteroid.png">Asteroid image</a>)
