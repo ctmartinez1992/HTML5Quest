@@ -45,7 +45,7 @@ Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.
 GAME 3 - Space Invaders
 =============
 
-everything was created by me except for the explosion effect.
+explosion.png was removed because it is not mine to districute
 
 <a href="https://dl.dropboxusercontent.com/u/52790690/HTML5%20GD/game3/game3/default.htm">Link to the game</a>
 
