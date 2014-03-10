@@ -1,0 +1,15 @@
+﻿body {
+    background-color: #101010;
+    color: #ffffff;
+}
+
+canvas {
+    display : block;
+    margin : auto;
+}
+
+@font-face {
+    font-family: "Chunk";
+    font-weight: normal;
+    src: url("assets/fonts/8bit.ttf") format("truetype");
+}
