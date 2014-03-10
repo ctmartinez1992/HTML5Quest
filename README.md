@@ -53,7 +53,6 @@ Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.
         Hosted at Github (<a href="https://github.com/ctmartinez1992/HTML5Quest">github</a>)<br>
         Programmed in Phaser framework (<a href="http://phaser.io">phaser</a>)<br>
         Drawn in Paint.NET (<a href="http://www.getpaint.net">Paint.NET</a>)<br>
-        <!--Music created with FL Studio 11 (<a href="http://www.image-line.com/flstudio">FL Studio 11</a>)<br>-->
         Sounds done at (<a href="http://www.bfxr.net">Bfxr</a>)<br>
         Credits to:<br>
         - GuShH (<a href="http://gushh.net/blog">GuShH</a>) for the explosion effect (<a href="http://gushh.net/blog/free-game-sprites-explosion-1">Explosion image</a>)<br>
