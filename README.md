@@ -47,7 +47,7 @@ GAME 3 - Space Invaders
 
 everything was created by me except for the explosion effect.
 
-<a href="https://dl.dropboxusercontent.com/u/52790690/HTML5%20GD/game2/game2/default.htm">Link to the game</a>
+<a href="https://dl.dropboxusercontent.com/u/52790690/HTML5%20GD/game3/game3/default.htm">Link to the game</a>
 
 Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.blogspot.pt">blog</a> and <a href="http://www.youtube.com/channel/UCQ649wgg3_M_C_2HDXkNApQ">channel</a>)<br>
         Hosted at Github (<a href="https://github.com/ctmartinez1992/HTML5Quest">github</a>)<br>
