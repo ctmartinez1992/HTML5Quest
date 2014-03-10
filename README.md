@@ -40,3 +40,20 @@ Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.
         Sounds done at (<a href="http://www.bfxr.net">Bfxr</a>)<br>
         Credits to:<br>
         - Starbound art (<a href="http://playstarbound.com/">Starbound</a>) for some inspiration in the art department (<a href="http://starbound.gamepedia.com/File:Main-page-asteroid.png">Asteroid image</a>)
+
+=============
+GAME 3 - Space Invaders
+=============
+
+everything was created by me except for the explosion effect.
+
+<a href="https://dl.dropboxusercontent.com/u/52790690/HTML5%20GD/game2/game2/default.htm">Link to the game</a>
+
+Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.blogspot.pt">blog</a> and <a href="http://www.youtube.com/channel/UCQ649wgg3_M_C_2HDXkNApQ">channel</a>)<br>
+        Hosted at Github (<a href="https://github.com/ctmartinez1992/HTML5Quest">github</a>)<br>
+        Programmed in Phaser framework (<a href="http://phaser.io">phaser</a>)<br>
+        Drawn in Paint.NET (<a href="http://www.getpaint.net">Paint.NET</a>)<br>
+        <!--Music created with FL Studio 11 (<a href="http://www.image-line.com/flstudio">FL Studio 11</a>)<br>-->
+        Sounds done at (<a href="http://www.bfxr.net">Bfxr</a>)<br>
+        Credits to:<br>
+        - GuShH (<a href="http://gushh.net/blog">GuShH</a>) for the explosion effect (<a href="http://gushh.net/blog/free-game-sprites-explosion-1">Explosion image</a>)<br>
