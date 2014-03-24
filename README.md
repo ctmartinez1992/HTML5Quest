@@ -83,6 +83,5 @@ Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.
         Hosted at Github (<a href="https://github.com/ctmartinez1992/HTML5Quest">github</a>)<br>
         Programmed in Phaser framework (<a href="http://phaser.io">phaser</a>)<br>
         Drawn in Paint.NET (<a href="http://www.getpaint.net">Paint.NET</a>)<br>
-        Music created with FL Studio 11 (<a href="http://www.image-line.com/flstudio">FL Studio 11</a>)<br>
         Sounds done at (<a href="http://www.bfxr.net">Bfxr</a>)<br>
 	Clone of Flappy Bird (<a href="http://en.wikipedia.org/wiki/Flappy_Bird">Wiki</a>)<br>
