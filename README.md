@@ -85,3 +85,16 @@ Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.
         Drawn in Paint.NET (<a href="http://www.getpaint.net">Paint.NET</a>)<br>
         Sounds done at (<a href="http://www.bfxr.net">Bfxr</a>)<br>
 	Clone of Flappy Bird (<a href="http://en.wikipedia.org/wiki/Flappy_Bird">Wiki</a>)<br>
+
+=============
+GAME 6 - The Achiever
+=============
+
+Everything was created by me.
+
+<a href="https://dl.dropboxusercontent.com/u/52790690/HTML5%20GD/game6/index.html">Link to the game</a>
+
+Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.blogspot.pt">blog</a> and <a href="http://www.youtube.com/channel/UCQ649wgg3_M_C_2HDXkNApQ">channel</a>)<br>
+        Hosted at Github (<a href="https://github.com/ctmartinez1992/HTML5Quest">github</a>)<br>
+        Programmed in Phaser framework (<a href="http://phaser.io">phaser</a>)<br>
+        Drawn in Paint.NET (<a href="http://www.getpaint.net">Paint.NET</a>)<br>
