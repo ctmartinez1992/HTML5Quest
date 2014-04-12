@@ -202,13 +202,21 @@ Game6.Game.prototype = {
 		
 		//Achievements
 		achievSystem = new Achievements(this.game);
+<<<<<<< HEAD
 		achievSystem.queueAchievement(1);
+=======
+		/*achievSystem.queueAchievement(1);
+>>>>>>> 0075b4df6daad40eac3bc30a1fbecd51785b53ab
 		achievSystem.queueAchievement(2);
 		achievSystem.queueAchievement(18);
 		achievSystem.queueAchievement(19);
 		achievSystem.queueAchievement(20);
 		achievSystem.queueAchievement(21);
+<<<<<<< HEAD
 		achievSystem.queueAchievement(22);
+=======
+		achievSystem.queueAchievement(22);*/
+>>>>>>> 0075b4df6daad40eac3bc30a1fbecd51785b53ab
 		
 		//Dialogs
 		firstDialog = new Dialogs(this.game);
