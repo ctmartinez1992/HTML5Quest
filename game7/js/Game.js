@@ -30,12 +30,9 @@ var hailing;
 
 var soundJump;
 var soundGoomba;
-var music;
 
 Game7.Game.prototype = {
-	create: function () {
-        this.sound.stopAll();
-		
+	create: function () {	
 		//P2 is neat as fuck
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
 		this.game.physics.p2.setImpactEvents(true);
@@ -168,15 +165,9 @@ Game7.Game.prototype = {
 		
 		sound_jump = game.add.audio('sound_jump');
 		sound_goomba = game.add.audio('sound_goomba');
-		music = game.add.audio('music');
-		music.play('', 0, 0.5);
 	},
 
 	update: function () {
-        if(this.game.input.keyboard.isDown(Phaser.Keyboard.ESC)) {            
-			game.state.start('MainMenu');
-        }
-		
 		this.updatePlayer();
 		this.updateEnemy();
     },

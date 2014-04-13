@@ -33,7 +33,6 @@ Game7.Preloader.prototype = {
 		//Audio
         this.load.audio('sound_goomba', 'assets/sounds/sound_goomba.wav');
         this.load.audio('sound_jump', 'assets/sounds/sound_jump.wav');
-        this.load.audio('music', 'assets/sounds/music.mp3');
 	},
 
 	create: function () {

@@ -7,9 +7,7 @@ var logo_jump;
 var logo_smash;
 
 Game7.MainMenu.prototype = {
-	create: function () {
-        this.sound.stopAll();
-		
+	create: function () {	
 		//Logo intro
 		logo_hail = game.add.sprite(this.game.world.centerX - 270, 100, 'logo_hail');
         logo_hail.anchor.setTo(0.5, 0.5);
@@ -65,11 +63,6 @@ Game7.MainMenu.prototype = {
         this.textInstEnemy.anchor.setTo(0.5, 0.5);
 		this.textInstEnemy.alpha = 0;
 		game.add.tween(this.textInstEnemy).delay(250).to({ alpha: 1 }, 500).start();
-		
-        this.textObjs = game.add.text(this.game.world.width / 2, this.game.world.height / 2 + 250, "JUMP AND THEN SMASH THE PLAYER ON THE HEAD", { font: "12px Chunk", fill: "#aa2222", align: "center" });
-        this.textObjs.anchor.setTo(0.5, 0.5);
-		this.textObjs.alpha = 0;
-		game.add.tween(this.textObjs).delay(500).to({ alpha: 1 }, 500).start();
 	},
 
 	startGame: function () {
