@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Game 9</title>
+		
+		<script type="text/javascript" src="js/phaser.js"></script>
+		<script type="text/javascript" src="js/Boot.js"></script>
+		<script type="text/javascript" src="js/Preloader.js"></script>
+		<script type="text/javascript" src="js/MainMenu.js"></script>
+		<script type="text/javascript" src="js/Game.js"></script>
+		<script type="text/javascript" src="js/GameOver.js"></script>
+		<script type="text/javascript" src="js/Fade.js"></script>
+		<script type="text/javascript" src="js/Volume.js"></script>
+		<script type="text/javascript" src="js/Pause.js"></script>
+		
+		<style type="text/css">
+			body {
+				background-color: #101010;
+				color: #ffffff;
+			}
+
+			canvas {
+				display : block;
+				margin : auto;
+			}
+
+			@font-face {
+				font-family: "Chunk";
+				font-weight: normal;
+				src: url("assets/fonts/8bit.ttf") format("truetype");
+			}
+		</style>
+	</head>
+	<body>
+	<div id="gameContainer"></div>
+		<script type="text/javascript">
+			//Control variables
+			var doUpdate;
+			var paused;
+			
+			var game;			
+			window.onload = function() {
+				game = window.game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameContainer');
+				game.score = 0;
+
+				game.state.add('Boot', Game9.Boot);
+				game.state.add('Preloader', Game9.Preloader);
+				game.state.add('MainMenu', Game9.MainMenu);
+				game.state.add('Game', Game9.Game);
+				game.state.add('GameOver', Game9.Game);
+
+				game.state.start('Boot');
+			};
+		</script> 
+		<br><br>
+		Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.blogspot.pt">blog</a> and <a href="http://www.youtube.com/channel/UCQ649wgg3_M_C_2HDXkNApQ">channel</a>)<br>
+		Hosted at Github (<a href="https://github.com/ctmartinez1992/HTML5Quest">github</a>)<br>
+		Programmed in Phaser framework (<a href="http://phaser.io">phaser</a>)<br>
+		Drawn in Paint.NET (<a href="http://www.getpaint.net">Paint.NET</a>)<br>
+		Sounds done at (<a href="http://www.bfxr.net">Bfxr</a>)<br>
+		Song is: "Gonna Start v2" Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 3.0 http://creativecommons.org/licenses/by/3.0/
+	</body>
+</html>
