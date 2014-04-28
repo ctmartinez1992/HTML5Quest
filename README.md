@@ -87,7 +87,7 @@ Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.
 	Clone of Flappy Bird (<a href="http://en.wikipedia.org/wiki/Flappy_Bird">Wiki</a>)<br>
 
 =============
-GAME 6 - The Achiever
+GAME 6 - The Achiever (Insanity Jam 2014)
 =============
 
 Everything was created by me.
@@ -106,6 +106,36 @@ GAME 7 - Hail, Jump!, SMASH!
 Everything was created by me.
 
 <a href="https://dl.dropboxusercontent.com/u/52790690/HTML5%20GD/game7/index.html">Link to the game</a>
+
+Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.blogspot.pt">blog</a> and <a href="http://www.youtube.com/channel/UCQ649wgg3_M_C_2HDXkNApQ">channel</a>)<br>
+		Hosted at Github (<a href="https://github.com/ctmartinez1992/HTML5Quest">github</a>)<br>
+		Programmed in Phaser framework (<a href="http://phaser.io">phaser</a>)<br>
+		Drawn in Paint.NET (<a href="http://www.getpaint.net">Paint.NET</a>)<br>
+		Sounds done at (<a href="http://www.bfxr.net">Bfxr</a>)<br>
+		Song is: "Gonna Start v2" Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 3.0 http://creativecommons.org/licenses/by/3.0/
+
+=============
+GAME 8 - Homework (3 Hour Game Jam)
+=============
+
+Everything was created by me.
+
+<a href="https://dl.dropboxusercontent.com/u/52790690/HTML5%20GD/game8/index.html">Link to the game</a>
+
+Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.blogspot.pt">blog</a> and <a href="http://www.youtube.com/channel/UCQ649wgg3_M_C_2HDXkNApQ">channel</a>)<br>
+		Hosted at Github (<a href="https://github.com/ctmartinez1992/HTML5Quest">github</a>)<br>
+		Programmed in Phaser framework (<a href="http://phaser.io">phaser</a>)<br>
+		Drawn in Paint.NET (<a href="http://www.getpaint.net">Paint.NET</a>)<br>
+		Sounds done at (<a href="http://www.bfxr.net">Bfxr</a>)<br>
+		Song is: (<a href="http://teknoaxe.com/Link_Code_2.php?q=428">WWWW by TeknoAXE</a>) - licensed under a Creative Commons Attribution 3.0 Unported License
+
+=============
+GAME 9 - 2048
+=============
+
+Everything was created by me.
+
+<a href="https://dl.dropboxusercontent.com/u/52790690/HTML5%20GD/game9/index.html">Link to the game</a>
 
 Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.blogspot.pt">blog</a> and <a href="http://www.youtube.com/channel/UCQ649wgg3_M_C_2HDXkNApQ">channel</a>)<br>
 		Hosted at Github (<a href="https://github.com/ctmartinez1992/HTML5Quest">github</a>)<br>
