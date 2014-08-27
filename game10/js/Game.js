@@ -3,11 +3,6 @@ Game10.Game = function (game) {
     this.game.score = 0;
     this.game.highscore = 0;
 };
-		
-var upKey;
-var downKey;
-var leftKey;
-var rightKey;
 
 Game10.Game.prototype = {
 	create: function () {
@@ -35,14 +30,14 @@ Game10.Game.prototype = {
 
         this.modalLayer = this.game.add.sprite(0, 0, this.endModalBmp);
 
-        this.ball = this.add.sprite(this.game.world.width / 2, 20, 'sprites', 'ball');
+        this.ball = this.add.sprite(this.game.world.width / 2, 20, 'ball');
 
         this.platform1 = this.game.add.group();
         this.platform2 = this.game.add.group();
         this.extra = this.game.add.group();
-        this.platform1.createMultiple(30, 'sprites', 'ground1');
-        this.platform2.createMultiple(30, 'sprites', 'ground2');
-        this.extra.createMultiple(5, 'sprites', 'extra1');
+        this.platform1.createMultiple(30, 'platform');
+        this.platform2.createMultiple(30, 'platform');
+        //this.extra.createMultiple(5, 'extra1');
 
         this.game.physics.enable(this.ball);
         this.game.physics.enable(this.platform1);
@@ -78,7 +73,7 @@ Game10.Game.prototype = {
         var firstLength = 3;
 
         while(firstLength--) {
-            this.setPlatform('1', (this.game.world.width / 2) - 24, firstLength, 48);
+            this.setPlatform('1', (this.game.world.width / 2), firstLength, 200);
         }
 
         while(i--) {
@@ -86,12 +81,29 @@ Game10.Game.prototype = {
             var initX = this.game.rnd.integerInRange(0, 160 - (16 * platformLength));
 
             while (platformLength--) {
-                this.setPlatform('1', initX, platformLength, 96 + (48 * i));
+                this.setPlatform('1', initX, platformLength, 96 + (200 * i));
             }
         }
 		
         this.spawnPlatform();
 	},
+
+    setPlatform: function (type, initX, platformLength, initY) {
+        var usePlatformTile1 = this['platform' + type].getFirstDead();
+
+        if (usePlatformTile1 !== null) {
+            usePlatformTile1.reset(initX + (16 * platformLength), initY);
+
+            usePlatformTile1.outOfBoundsKill = true;
+            usePlatformTile1.checkWorldBounds = true;
+
+            usePlatformTile1.body.immovable = true;
+            usePlatformTile1.body.checkCollision.up = true;
+            usePlatformTile1.body.checkCollision.down = true;
+            usePlatformTile1.body.checkCollision.left = true;
+            usePlatformTile1.body.checkCollision.right = true;
+        }
+    },
 
 	update: function () {
         if(this.game.input.keyboard.isDown(Phaser.Keyboard.ESC)) {            
@@ -143,7 +155,7 @@ Game10.Game.prototype = {
     getExtraCallback: function(ball, extra) {
         extra.kill();
         this.game.score += 25;
-        this.game.audio.touch.play();
+        //this.game.audio.touch.play();
     },
 
 	quitGame: function () {
@@ -151,7 +163,7 @@ Game10.Game.prototype = {
 
         if (!this.dead) {
             this.ball.kill();
-            this.game.audio.crash.play();
+            //this.game.audio.crash.play();
             this.game.time.events.remove(this.platformTimer);
             this.setVelocities(0);
             this.game.highscore = Math.max(this.game.highscore, this.game.score);
@@ -213,23 +225,6 @@ Game10.Game.prototype = {
 
         if (this.ball.x < -16) {
             this.ball.x = this.game.world.width + 16;
-        }
-    },
-
-    setPlatform: function (type, initX, platformLength, initY) {
-        var usePlatformTile1 = this['platform' + type].getFirstDead();
-
-        if (usePlatformTile1 !== null) {
-            usePlatformTile1.reset(initX + (16 * platformLength), initY);
-
-            usePlatformTile1.outOfBoundsKill = true;
-            usePlatformTile1.checkWorldBounds = true;
-
-            usePlatformTile1.body.immovable = true;
-            usePlatformTile1.body.checkCollision.up = true;
-            usePlatformTile1.body.checkCollision.down = true;
-            usePlatformTile1.body.checkCollision.left = true;
-            usePlatformTile1.body.checkCollision.right = true;
         }
     },
 

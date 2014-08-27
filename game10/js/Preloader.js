@@ -24,8 +24,8 @@ Game10.Preloader.prototype = {
 		//Images
 		this.load.image('icon_volume', 'assets/icon_volume.png');
 		this.load.image('icon_volume_hover', 'assets/icon_volume_hover.png');
-		this.load.image('border', 'assets/border.png');
-		this.load.image('tile', 'assets/tile.png');
+		this.load.image('platform', 'assets/platform.png');
+		this.load.image('ball', 'assets/ball.png');
 		
 		//Audio
         this.load.audio('music', 'assets/sounds/music.mp3');
