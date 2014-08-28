@@ -57,16 +57,16 @@ Game10.MainMenu.prototype = {
 	update: function () {
 		var x = x || 5;
 		var y = y || 5;
-		var rx = Math.floor(Math.random() * (x + 5)) - x / 2;
-		var ry = Math.floor(Math.random() * (y + 5)) - y / 2;
-		rx = (rx === 0 && x !== 0) ? ((Math.random() < 0.5) ? 2 : -2) : rx;
-		ry = (ry === 0 && y !== 0) ? ((Math.random() < 0.5) ? 2 : -2) : ry;
+		var rx = Math.floor(Math.random() * (x + 2.5)) - x / 2;
+		var ry = Math.floor(Math.random() * (y + 2.5)) - y / 2;
+		rx = (rx === 0 && x !== 0) ? ((Math.random() < 0.5) ? 1.5 : -1.5) : rx;
+		ry = (ry === 0 && y !== 0) ? ((Math.random() < 0.5) ? 1.5 : -1.5) : ry;
 		this.textInst3.x += rx - 3;
 		this.textInst3.y += ry;
-		if((this.textInst3.x > game.camera.width / 2 + 20) || this.textInst3.x < (game.camera.width / 2 - 20)) {
+		if((this.textInst3.x > game.camera.width / 2 + 15) || this.textInst3.x < (game.camera.width / 2 - 15)) {
 			this.textInst3.x = game.camera.width / 2;
 		}
-		if((this.textInst3.y > game.camera.height / 2 + 60 + 20) || this.textInst3.y < (game.camera.height / 2 + 60 - 20)) {
+		if((this.textInst3.y > game.camera.height / 2 + 60 + 15) || this.textInst3.y < (game.camera.height / 2 + 60 - 15)) {
 			this.textInst3.y = game.camera.height / 2 + 60;
 		}
 		
