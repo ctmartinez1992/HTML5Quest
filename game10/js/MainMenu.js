@@ -1,5 +1,6 @@
 Game10.MainMenu = function (game) {
     this.game = game;
+    this.game.highscore = 0;
 };
 
 Game10.MainMenu.prototype = {

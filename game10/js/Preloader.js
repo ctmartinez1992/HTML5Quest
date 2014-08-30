@@ -24,15 +24,21 @@ Game10.Preloader.prototype = {
 		//Images
 		this.load.image('icon_volume', 'assets/icon_volume.png');
 		this.load.image('icon_volume_hover', 'assets/icon_volume_hover.png');
+		this.load.image('bg', 'assets/bg.png');
 		this.load.image('platform1', 'assets/platform1.png');
 		this.load.image('platform2', 'assets/platform2.png');
 		this.load.image('platform3', 'assets/platform3.png');
 		this.load.image('extra1', 'assets/plus.png');
+		this.load.image('extra2', 'assets/shift.png');
+		this.load.image('extra3', 'assets/gravity.png');
 		this.load.image('ball', 'assets/ball.png');
 		
 		//Audio
         this.load.audio('music', 'assets/sounds/music.mp3');
         this.load.audio('pause_music', 'assets/sounds/pause_music.mp3');
+        this.load.audio('land', 'assets/sounds/land.wav');
+        this.load.audio('extra', 'assets/sounds/extra.wav');
+        this.load.audio('lost', 'assets/sounds/lost.wav');
 	},
 
 	create: function () {
