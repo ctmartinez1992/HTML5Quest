@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Game 11</title>
+		
+		<!--Library-->
+		<script type="text/javascript" src="js/phaser.js"></script>
+		<script type="text/javascript" src="js/juicy.js"></script>
+		
+		<!--Game stuff-->
+		<script type="text/javascript" src="js/boot.js"></script>
+		<script type="text/javascript" src="js/preloader.js"></script>
+		<script type="text/javascript" src="js/mainmenu.js"></script>
+		<script type="text/javascript" src="js/game.js"></script>
+		<script type="text/javascript" src="js/gameover.js"></script>
+		
+		<!--Helpful stuff-->
+		<script type="text/javascript" src="js/fade.js"></script>
+		<script type="text/javascript" src="js/volume.js"></script>
+		<script type="text/javascript" src="js/pause.js"></script>
+		
+		<style type="text/css">
+			body {
+				background-color: #101010;
+				color: #ffffff;
+			}
+
+			canvas {
+				display : block;
+				margin : auto;
+			}
+
+			@font-face {
+				font-family: "Chunk";
+				font-weight: normal;
+				src: url("assets/fonts/8bit.ttf") format("truetype");
+			}
+		</style>
+	</head>
+	<body>
+	<div id="gameContainer"></div>
+		<script type="text/javascript">
+			//Control variables
+			var doUpdate;
+			var paused;			
+			var game;
+			
+			window.onload = function() {
+				game = window.game = new Phaser.Game(600, 600, Phaser.AUTO, 'gameContainer');
+				game.score = 0;
+
+				game.state.add('Boot', Game11.Boot);
+				game.state.add('Preloader', Game11.Preloader);
+				game.state.add('MainMenu', Game11.MainMenu);
+				game.state.add('Game', Game11.Game);
+				game.state.add('GameOver', Game11.GameOver);
+
+				game.state.start('Boot');
+			};
+		</script> 
+		<br><br>
+		<!--
+		Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.blogspot.pt">blog</a> and <a href="http://www.youtube.com/channel/UCQ649wgg3_M_C_2HDXkNApQ">channel</a>)<br>
+		Hosted at Github (<a href="https://github.com/ctmartinez1992/HTML5Quest">github</a>)<br>
+		Programmed in Phaser framework (<a href="http://phaser.io">phaser</a>)<br>
+		Drawn in Paint.NET (<a href="http://www.getpaint.net">Paint.NET</a>)<br>
+		Sounds done at (<a href="http://www.bfxr.net">Bfxr</a>)<br>
+		Song is: "Gonna Start v2" Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 3.0 http://creativecommons.org/licenses/by/3.0/
+		-->
+	</body>
+</html>
