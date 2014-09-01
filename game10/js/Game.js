@@ -1,7 +1,11 @@
 Game10.Game = function (game) {
     this.game = game;
 };
-		
+	
+	
+    var startVel = -100;
+	var vel = -100;
+	var dead = false;
 	var spawnTime = 1;
 	var spawnCounter = 0;
 	var platformCounter = 0;
@@ -26,18 +30,16 @@ Game10.Game.prototype = {
 		//Control variables
 		doUpdate = true;
 		paused = false;
-		
-		//Is it over?
-		this.dead = false;
 
-		//Starting game velocity
-        this.initialVelocity = -100;
-		//Increasing game velocity
-		this.levelVelocity = -100;
 		//Player score
         this.game.score = 0;
 		
+		//Starting  and current game velocity
+        startVel = -100;
+		vel = -100;
+		
 		//Spawn variables and extras modifiers.
+		dead = false;
 		spawnTime = 1;
 		spawnCounter = 0;
 		platformCounter = 0;
@@ -76,7 +78,7 @@ Game10.Game.prototype = {
         this.ball.body.collideWorldBounds = false;	//Don't collide with screen limits
 		this.ball.body.bounce.set(0);				//No bounce
         this.ball.body.mass = 1;					//Small mass
-        this.ball.body.gravity.y = 2000;				//Some gravity
+        this.ball.body.gravity.y = 2000;			//Some gravity
 		this.ball.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED);
 		this.ball.body.drag.setTo(this.DRAG, 0);
 
@@ -106,11 +108,11 @@ Game10.Game.prototype = {
 		Volume.init(0, game.camera.height - 26);
 		
 		//Set platforms
-        this.setPlatform('3', 200, 0, 300);
+        this.createPlatform('3', 200, 0, 300);
         this.platformTimer = this.game.time.events.add(Phaser.Timer.SECOND, this.spawnPlatform, this);
 	},
 
-    setPlatform: function (type, initX, platformLength, initY) {
+    createPlatform: function (type, initX, platformLength, initY) {
 		//Reuse and reset platforms as needed/generated
         var usePlatformTile1 = this['platform' + type].getFirstDead();
         if (usePlatformTile1 !== null) {
@@ -154,10 +156,10 @@ Game10.Game.prototype = {
 		this.spawnExtra(initX, initY);
 		
 		//Set the platform
-        this.setPlatform(type, initX, 1, initY);
+        this.createPlatform(type, initX, 1, initY);
 		
 		//Adjust velocity for platforms and extras and schedule next platform spawn.
-        this.setVelocities(this.levelVelocity);
+        this.setVelocities(vel);
         this.platformTimer = this.game.time.events.add(Phaser.Timer.SECOND * this.game.rnd.integerInRange(1, spawnTime), this.spawnPlatform, this);
         this.platformTimer.autoDestroy = true;
     },
@@ -249,7 +251,7 @@ Game10.Game.prototype = {
 			this.updatePlayer();
 
 			//Increase velocity to increase difficulty.
-			this.levelVelocity = (this.initialVelocity - platformCounter) * extraVelocityModifier;
+			vel = (startVel - platformCounter) * extraVelocityModifier;
 			
 			//Set score.
 			this.textScore.text = "SCORE: " + this.game.score;
@@ -283,10 +285,10 @@ Game10.Game.prototype = {
 		//Shift extra. Shifts ball, platform and extra direction.
         extra.kill();
         extraVelocityModifier = -1;
-		this.levelVelocity = (this.initialVelocity - platformCounter) * extraVelocityModifier;
-		this.setVelocities(this.levelVelocity);
+		vel = (startVel - platformCounter) * extraVelocityModifier;
+		this.setVelocities(vel);
         this.game.time.events.add(Phaser.Timer.SECOND * 10, function() { 
-			extraVelocityModifier = 1; this.levelVelocity = (this.initialVelocity - platformCounter) * extraVelocityModifier; this.setVelocities(this.levelVelocity);}, this);
+			extraVelocityModifier = 1; vel = (startVel - platformCounter) * extraVelocityModifier; this.setVelocities(vel);}, this);
         this.extraSound.play();
     },
 
@@ -301,9 +303,9 @@ Game10.Game.prototype = {
 
 	quitGame: function () {
 		//Game Over. Go to GameOver Screen.
-        if (!this.dead) {
+        if (!dead) {
 			this.lostSound.play();
-            this.dead = true;
+            dead = true;
 			this.ball.kill();
 			Fade.fadeOut('GameOver');
         }
