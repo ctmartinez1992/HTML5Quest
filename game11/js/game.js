@@ -5,15 +5,14 @@ Game11.Game = function (game) {
 	var PLAYER_MAX_SPEED = 500;			//Player max speed
 	var PLAYER_ACCELERATION = 1500;		//Player acceleration
 	var PLAYER_DRAG = 600;				//Player drag, slide coefficient
-    var PLAYER_JUMP_SPEED = -1000;  	//Player jump
-    var PLAYER_JUMP_HOLD = 300;  		//Hold the button for player to jump more
+    var PLAYER_JUMP_SPEED = -1600;  	//Player jump
+    var PLAYER_JUMP_HOLD = 150;  		//Hold the button for player to jump more
 	var GRAVITY = 2600; 				//Gravity constant
 
 Game11.Game.prototype = {
 	create: function () {
 		//Necessary stuff
         this.sound.stopAll();		
-		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		
 		//Background
 		this.game.stage.backgroundColor = 0x886A08;		
@@ -28,23 +27,13 @@ Game11.Game.prototype = {
         this.game.score = 0;
 
 		//Player
-        this.player = this.add.sprite(this.game.world.width / 2, this.game.world.height / 2, 'player');
-		this.player.anchor.setTo(0.5, 0.5);
+        this.player = this.add.sprite(50, this.game.world.height / 2, 'player');
 		this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
+		this.player.animations.add('idle', [0]);
+		this.player.animations.add('walk', [1,2]);
 		this.player.body.collideWorldBounds = true;
 		this.player.body.maxVelocity.setTo(PLAYER_MAX_SPEED, PLAYER_MAX_SPEED);
 		this.player.body.drag.setTo(PLAYER_DRAG, 0);
-
-		//Group creation for different platforms and extras
-        this.platform1 = this.game.add.group();
-        this.extra1 = this.game.add.group();
-        //this.platform1.createMultiple(30, 'platform1');
-        //this.extra1.createMultiple(5, 'extra1');
-
-		//Enable physics on ball, platforms and extras
-        this.game.physics.enable(this.player);
-        this.game.physics.enable(this.platform1);
-        this.game.physics.enable(this.extra1);
 		
 		//Arcade physics
 		this.game.physics.arcade.gravity.y = GRAVITY;
@@ -52,7 +41,26 @@ Game11.Game.prototype = {
 		//Player controls
 		this.canDoubleJump = true;
 		this.canVariableJump = true;
-        this.cursors = this.game.input.keyboard.createCursorKeys();
+		
+		//The ground
+		/*this.ground = this.game.add.group();
+		for(var x = 0; x < this.game.width; x += 32) {
+			var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
+			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+			groundBlock.body.immovable = true;
+			groundBlock.body.allowGravity = false;
+			this.ground.add(groundBlock);
+		}*/
+		
+		//Map creation
+		this.map = this.game.add.tilemap('map_json');
+		this.map.addTilesetImage('tiles_spritesheet', 'tileset');
+        this.map.setCollisionBetween(0, 100);
+		this.layer = this.map.createLayer('tiles');
+		this.layer.resizeWorld();
+		
+		//Camera follows player
+		this.game.camera.follow(this.player);
 		
 		//Capture certain keys to prevent their default actions in the browser.
 		//This is only necessary because this is an HTML5 game. Games on other platforms may not need code like this.
@@ -85,52 +93,6 @@ Game11.Game.prototype = {
 		Volume.init(0, game.camera.height - 26);
 	},
 
-    spawnPlatform: function () {
-		//Generate some random numbers for type and position
-        var initX = this.game.rnd.integerInRange(0, this.game.world.width);
-        var initY = this.game.rnd.integerInRange(0, this.game.world.height);
-		
-		//Spawn an extra if possible
-		this.spawnExtra(initX, initY);
-		
-		//Set the platform
-        this.createPlatform("1", initX, initY);
-		
-		//Schedule next platform spawn
-        this.platformTimer = this.game.time.events.add(Phaser.Timer.SECOND * this.game.rnd.integerInRange(1, 2), this.spawnPlatform, this);
-        this.platformTimer.autoDestroy = true;
-    },
-
-    createPlatform: function (type, initX, initY) {
-        var usePlatform = this['platform' + type].getFirstDead();
-        if (usePlatform !== null) {
-            usePlatform.reset(initX, initY);
-            usePlatform.outOfBoundsKill = true;
-            usePlatform.checkWorldBounds = true;
-            usePlatform.body.immovable = true;
-            usePlatform.body.checkCollision.up = true;
-            usePlatform.body.checkCollision.down = true;
-            usePlatform.body.checkCollision.left = true;
-            usePlatform.body.checkCollision.right = true;
-        }
-    },
-	
-	spawnExtra: function (initX, initY) {
-        if (Math.random() > 0.75) {
-			var initXExtra = initX + this.game.rnd.integerInRange(-100, 100)
-			var initYExtra = initY + this.game.rnd.integerInRange(-100, 100) ;
-			var randomExtra = this.game.rnd.integerInRange(1, 2);
-			if(randomExtra == 1) {
-				var extra1 = this.extra1.getFirstDead();
-				if (extra1 !== null) {
-					extra1.reset(initXExtra, initYExtra);
-					extra1.outOfBoundsKill = true;
-					extra1.checkWorldBounds = true;
-				}
-			}
-        }
-	},
-
 	update: function () {
 		//Quit game if user wants
         if(this.game.input.keyboard.isDown(Phaser.Keyboard.ESC)) {            
@@ -150,9 +112,8 @@ Game11.Game.prototype = {
 			}
 
 			//Set collision callbacks
-			this.game.physics.arcade.overlap(this.ball, this.extra1, this.getExtraCallback1, null, this);
-			this.game.physics.arcade.collide(this.platform1, this.ball);
-			
+			this.game.physics.arcade.collide(this.player, this.layer);	
+
 			//Update the player
 			this.updatePlayer();
 			
@@ -164,15 +125,18 @@ Game11.Game.prototype = {
 	updatePlayer: function() {
 		//Left and right movement
 		if (this.leftInputIsActive()) {
-			this.player.body.acceleration.x = -this.ACCELERATION;
+			this.player.body.acceleration.x = -PLAYER_ACCELERATION;
+			this.player.animations.play('walk', 4, true);
 		} else if (this.rightInputIsActive()) {
-			this.player.body.acceleration.x = this.ACCELERATION;
+			this.player.body.acceleration.x = PLAYER_ACCELERATION;
+			this.player.animations.play('walk', 8, true);
 		} else {
 			this.player.body.acceleration.x = 0;
+			this.player.animations.play('idle', 1, false);
 		}
 
 		//Is the player touching the ground?
-		var onTheGround = this.player.body.touching.down;
+		var onTheGround = this.player.body.blocked.down;
 		if (onTheGround) {
 			this.canDoubleJump = true;
 		}
@@ -217,35 +181,27 @@ Game11.Game.prototype = {
 		isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
 		isActive |= (this.game.input.activePointer.isDown && this.game.input.activePointer.x > ((this.game.width / 2) + (this.game.width / 4)));
 		return isActive;
-	};
-
+	},
 
 	upInputIsActive: function(duration) {
 		var isActive = false;
 		isActive = this.input.keyboard.justPressed(Phaser.Keyboard.UP, duration);
 		isActive |= (this.game.input.activePointer.justPressed((duration + (1000 / 60))) &&
 					(this.game.input.activePointer.x > (this.game.width / 4)) &&
-					(this.game.input.activePointer.x < ((this.game.width / 2) + (this.game.width / 4)));
+					(this.game.input.activePointer.x < ((this.game.width / 2) + (this.game.width / 4))));
 		return isActive;
-	};
+	},
 	
 	checkAlive: function() {
-		//Check if ball is still in game. This is what ends the game
 		return true;
-    },
-
-    getExtraCallback1: function(ball, extra) {
-        extra.kill();
-		//Do something
-        this.extraSound.play();
     },
 
 	quitGame: function () {
 		//Game Over. Go to GameOver Screen
         if (!this.dead) {
-			this.lostSound.play();
             this.dead = true;
-			this.ball.kill();
+			this.lostSound.play();
+			this.player.kill();
 			Fade.fadeOut('GameOver');
         }
 	}

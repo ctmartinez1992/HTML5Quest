@@ -16,9 +16,9 @@
 		<script type="text/javascript" src="js/gameover.js"></script>
 		
 		<!--Helpful stuff-->
-		<script type="text/javascript" src="js/fade.js"></script>
-		<script type="text/javascript" src="js/volume.js"></script>
-		<script type="text/javascript" src="js/pause.js"></script>
+		<script type="text/javascript" src="js/zhelp_fade.js"></script>
+		<script type="text/javascript" src="js/zhelp_volume.js"></script>
+		<script type="text/javascript" src="js/zhelp_pause.js"></script>
 		
 		<style type="text/css">
 			body {
@@ -47,7 +47,7 @@
 			var game;
 			
 			window.onload = function() {
-				game = window.game = new Phaser.Game(600, 600, Phaser.AUTO, 'gameContainer');
+				game = window.game = new Phaser.Game(1000, 500, Phaser.AUTO, 'gameContainer');
 				game.score = 0;
 
 				game.state.add('Boot', Game11.Boot);

@@ -15,15 +15,16 @@ Game11.Preloader.prototype = {
 		//Menu
 		
 		//Map
-		//this.load.tilemap('map_json', 'assets/map_json.json', null, Phaser.Tilemap.TILED_JSON);
-		//this.load.image('tiles', 'assets/tiles_spritesheet.png');
+		this.load.image('tileset', 'assets/tiles_spritesheet.png');
+		this.load.tilemap('map_json', 'assets/map_json.json', null, Phaser.Tilemap.TILED_JSON);
 		
 		//Sprite sheets
-		//this.load.spritesheet('tiles', 'assets/tiles_spritesheet.png', 16, 16);
+		this.load.spritesheet('player', 'assets/player.png', 24, 24, 3);
 		
 		//Images
 		this.load.image('icon_volume', 'assets/icon_volume.png');
 		this.load.image('icon_volume_hover', 'assets/icon_volume_hover.png');
+		this.load.image('ground', 'assets/ground.png');
 		
 		//Audio
         this.load.audio('music', 'assets/sounds/music.mp3');
