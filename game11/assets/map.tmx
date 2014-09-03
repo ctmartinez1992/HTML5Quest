@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="220" height="40" tilewidth="24" tileheight="24">
  <tileset firstgid="1" name="tiles_spritesheet" tilewidth="24" tileheight="24">
-  <image source="sheet.png" width="240" height="240"/>
+  <image source="tiles_spritesheet.png" width="240" height="288"/>
  </tileset>
  <layer name="tiles" width="220" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt1lsKgzAQQNGQ+gC3aBXc/yYaIaBIQT80UnsOXBBiYPwYMAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA/xVTr1x18yzwdHWqzzU3zwJPZ9/gPHv/i0f3Leb7dX4vnjsm/KT1fs21YdmnbnP27XzeqXdqSI2r52lzvy31QXCxQVKxeknF+gDHNaSA
+   eJzt2DlLxFAUhuGDK4i2WjiFWoiooIhaiQqKaKuFhTs47ss46v/3u8RAyKiTTJGTxPeBFwK5Cbe4B0LMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4K1P9asxdaaO1ISaVgdqSy2oNbXutEegDsbVpHrN2Iba9tgoUHHzasmyz1rcnjp32C9QVZtqx6L5eUnVVDfqNnV9p+7Vg7pWi4XvGqieQ3Vs0aw9qWf7ed5+m7XH7+dW1EzBeweq4NSifyGhK4tmLTk7yZlrWvdZi9fPqbcSBnjZt87vxL9mqA7rgLzi//ShgR7fsWr+Z99jHZDXoGqpthrq4fkpK8fZ91gH5BXm7V19WP55G7XynH2PdUBat+/FrPOWfE9cmc6+xzogPRfD6kJdqhHrnJlwP563cD/MZPi+DP/f2onrTzWrltWuali5zr7HOtSD939uov/UCREV1hcvtIeD
   </data>
  </layer>
 </map>

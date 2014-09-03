@@ -55,7 +55,7 @@ Game11.Game.prototype = {
 		//Map creation
 		this.map = this.game.add.tilemap('map_json');
 		this.map.addTilesetImage('tiles_spritesheet', 'tileset');
-        this.map.setCollisionBetween(0, 100);
+        this.map.setCollisionBetween(0, 116);
 		this.layer = this.map.createLayer('tiles');
 		this.layer.resizeWorld();
 		
