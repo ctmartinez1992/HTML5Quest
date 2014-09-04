@@ -20,7 +20,7 @@ Pause.init = function() {
 	//Add music
 	music = game.add.audio('music');
 	pauseMusic = game.add.audio('pause_music');
-	music.play('', 0, 0.25, true);
+	//music.play('', 0, 0.25, true);
 	pauseMusic.play('', 0, 0.25, true);
 	pauseMusic.pause();
 };

@@ -2,26 +2,57 @@ Game11.Game = function (game) {
     this.game = game;
 };
 
-	var PLAYER_MAX_SPEED = 500;			//Player max speed
+	var PLAYER_MAX_SPEED = 750;		//Player max speed
 	var PLAYER_ACCELERATION = 1500;		//Player acceleration
 	var PLAYER_DRAG = 600;				//Player drag, slide coefficient
-    var PLAYER_JUMP_SPEED = -1600;  	//Player jump
+    var PLAYER_JUMP_SPEED = -1200; 		//Player jump
     var PLAYER_JUMP_HOLD = 150;  		//Hold the button for player to jump more
 	var GRAVITY = 2600; 				//Gravity constant
 
 Game11.Game.prototype = {
 	create: function () {
 		//Necessary stuff
-        this.sound.stopAll();		
+        this.sound.stopAll();
+		
+		//juicy juicy
+		this.juicy = this.game.plugins.add(new Phaser.Plugin.Juicy(this));		
 		
 		//Background
-		this.game.stage.backgroundColor = 0x886A08;		
-        //this.bg = this.add.sprite(0, 0, 'bg');
+		this.rC = 0;
+		this.gC = 0;
+		this.bC = 0;
+		this.rI = 1;
+		this.gI = 1;
+		this.bI = 1;
 		
 		//Control variables
 		doUpdate = true;
 		paused = false;
 		this.dead = false;
+		
+		//Arcade physics
+		this.game.physics.arcade.gravity.y = GRAVITY;
+
+		//Player controls
+		this.canDoubleJump = true;
+		this.canVariableJump = true;
+		
+		//Map creation
+		this.map = this.game.add.tilemap('map_json');
+		this.map.addTilesetImage('tiles_spritesheet', 'tileset');
+        this.map.setCollisionBetween(2, 10);
+        this.map.setCollisionBetween(12, 20);
+        this.map.setCollisionBetween(22, 30);
+        this.map.setCollisionBetween(32, 40);
+        this.map.setCollisionBetween(42, 50);
+        this.map.setCollisionBetween(52, 60);
+        this.map.setCollisionBetween(62, 70);
+        this.map.setCollisionBetween(72, 80);
+        this.map.setCollisionBetween(82, 90);
+        this.map.setCollisionBetween(92, 100);
+        this.map.setCollisionBetween(112, 120);
+		this.layer = this.map.createLayer('tiles');
+		this.layer.resizeWorld();
 
 		//Player score
         this.game.score = 0;
@@ -34,30 +65,6 @@ Game11.Game.prototype = {
 		this.player.body.collideWorldBounds = true;
 		this.player.body.maxVelocity.setTo(PLAYER_MAX_SPEED, PLAYER_MAX_SPEED);
 		this.player.body.drag.setTo(PLAYER_DRAG, 0);
-		
-		//Arcade physics
-		this.game.physics.arcade.gravity.y = GRAVITY;
-
-		//Player controls
-		this.canDoubleJump = true;
-		this.canVariableJump = true;
-		
-		//The ground
-		/*this.ground = this.game.add.group();
-		for(var x = 0; x < this.game.width; x += 32) {
-			var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
-			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
-			groundBlock.body.immovable = true;
-			groundBlock.body.allowGravity = false;
-			this.ground.add(groundBlock);
-		}*/
-		
-		//Map creation
-		this.map = this.game.add.tilemap('map_json');
-		this.map.addTilesetImage('tiles_spritesheet', 'tileset');
-        this.map.setCollisionBetween(0, 116);
-		this.layer = this.map.createLayer('tiles');
-		this.layer.resizeWorld();
 		
 		//Camera follows player
 		this.game.camera.follow(this.player);
@@ -106,6 +113,9 @@ Game11.Game.prototype = {
 		
 		//doUpdate
 		if (doUpdate) {
+			//Update background color
+			this.colorTrip();
+		
 			//Check if it's alive
 			if (!this.checkAlive()) {
 				this.quitGame();
@@ -158,6 +168,7 @@ Game11.Game.prototype = {
 
 		//150 ms of jump difference
 		if (this.canVariableJump && this.upInputIsActive(PLAYER_JUMP_HOLD)) {
+			this.juicy.jelly(this.player, 0.4);
 			this.player.body.velocity.y = PLAYER_JUMP_SPEED;
 		}
 
@@ -190,6 +201,33 @@ Game11.Game.prototype = {
 					(this.game.input.activePointer.x > (this.game.width / 4)) &&
 					(this.game.input.activePointer.x < ((this.game.width / 2) + (this.game.width / 4))));
 		return isActive;
+	},
+	
+	colorTrip: function() {
+		if (this.rC >= 250) {
+			this.rI = -1;
+		}
+		if (this.rC <= 5) {
+			this.rI = 1;
+		}
+		if (this.gC >= 250) {
+			this.gI = -1;
+		}
+		if (this.gC <= 5) {
+			this.gI = 1;
+		}
+		if (this.bC >= 250) {
+			this.bI = -1;
+		}
+		if (this.bC <= 5) {
+			this.bI = 1;
+		}
+		
+		this.rC += (Math.abs(Math.sin(this.game.time.now * (180 / 3.14))) * 1.5) * this.rI;
+		this.gC += (Math.abs(Math.cos(this.game.time.now * (180 / 3.14))) * 2) * this.gI;
+		this.bC += (Math.abs(Math.sin(this.game.time.now * (180 / 3.14))) * 3) * this.bI;
+		
+		this.game.stage.backgroundColor = (this.rC << 16) | (this.gC << 8) | (this.bC);
 	},
 	
 	checkAlive: function() {

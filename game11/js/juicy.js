@@ -1,6 +1,4 @@
 'use strict';
-
-
 /**
 * @author       Jeremy Dowell <jeremy@codevinsky.com>
 * @license      {@link http://www.wtfpl.net/txt/copying/|WTFPL}
@@ -84,7 +82,6 @@ Phaser.Plugin.Juicy.ScreenFlash = function(game, color) {
 Phaser.Plugin.Juicy.ScreenFlash.prototype = Object.create(Phaser.Sprite.prototype);
 Phaser.Plugin.Juicy.ScreenFlash.prototype.constructor = Phaser.Plugin.Juicy.ScreenFlash;
 
-
 /*
 * Flashes the screen
 *
@@ -166,7 +163,6 @@ Phaser.Plugin.Juicy.Trail.prototype.constructor = Phaser.Plugin.Juicy.Trail;
 * @method Phaser.Plugin.Juicy.Trail#update
 * @memberof Phaser.Plugin.Juicy.Trail
 */
-
 Phaser.Plugin.Juicy.Trail.prototype.update = function() {
   if(this.target) {
     this.x = this.target.x;
@@ -288,11 +284,6 @@ Phaser.Plugin.Juicy.Trail.prototype.redrawSegments = function(offsetX, offsetY) 
   }
 };
 
-
-
-
-
-
 /**
 * Add a Sprite reference to this Plugin.
 * All this plugin does is move the Sprite across the screen slowly.
@@ -314,7 +305,6 @@ Phaser.Plugin.Juicy.prototype.shake = function (duration, strength) {
   this.game.world.setBounds(this._boundsCache.x - this._shakeWorldMax, this._boundsCache.y - this._shakeWorldMax, this._boundsCache.width + this._shakeWorldMax, this._boundsCache.height + this._shakeWorldMax);
 };
 
-
 /**
 * Creates a 'Juicy.ScreenFlash' object
 *
@@ -327,7 +317,6 @@ Phaser.Plugin.Juicy.prototype.createScreenFlash = function(color) {
     return new Phaser.Plugin.Juicy.ScreenFlash(this.game, color);
 };
 
-
 /**
 * Creates a 'Juicy.Trail' object
 *
@@ -339,7 +328,6 @@ Phaser.Plugin.Juicy.prototype.createScreenFlash = function(color) {
 Phaser.Plugin.Juicy.prototype.createTrail = function(length, color) {
   return new Phaser.Plugin.Juicy.Trail(this.game, length, color);
 };
-
 
 /**
 * Creates the over scale effect on the given object
