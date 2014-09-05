@@ -58,7 +58,7 @@ Game11.Game.prototype = {
         this.game.score = 0;
 
 		//Player
-        this.player = this.add.sprite(50, this.game.world.height / 2, 'player');
+        this.player = this.add.sprite(20000, this.game.world.height / 2, 'player');
 		this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
 		this.player.animations.add('idle', [0]);
 		this.player.animations.add('walk', [1,2]);
@@ -113,8 +113,14 @@ Game11.Game.prototype = {
 		
 		//doUpdate
 		if (doUpdate) {
-			//Update background color
-			this.colorTrip();
+			//Update background colour
+			if (this.player.x > 7000 && this.player.x < 17000) {
+				this.colorTrip2();
+				this.colorVar = false;
+			} else {
+				this.colorTrip();
+				this.colorVar = true;
+			}
 		
 			//Check if it's alive
 			if (!this.checkAlive()) {
@@ -168,7 +174,37 @@ Game11.Game.prototype = {
 
 		//150 ms of jump difference
 		if (this.canVariableJump && this.upInputIsActive(PLAYER_JUMP_HOLD)) {
-			this.juicy.jelly(this.player, 0.4);
+			if (this.player.x <= 2000.0) {
+				this.juicy.jelly(this.player, 1);
+			}
+			if (this.player.x > 2000.0 && this.player.x <= 4000.0) {
+				this.juicy.jelly(this.player, 0.9);
+			}
+			if (this.player.x > 4000.0 && this.player.x <= 6000.0) {
+				this.juicy.jelly(this.player, 0.8);
+			}
+			if (this.player.x > 6000.0 && this.player.x <= 8000.0) {
+				this.juicy.jelly(this.player, 0.7);
+			} 
+			if (this.player.x > 8000.0 && this.player.x <= 10000.0) {
+				this.juicy.jelly(this.player, 0.6);
+			} 
+			if (this.player.x > 10000.0 && this.player.x <= 12000.0) {
+				this.juicy.jelly(this.player, 0.5);
+			} 
+			if (this.player.x > 12000.0 && this.player.x <= 14000.0) {
+				this.juicy.jelly(this.player, 0.4);
+			} 
+			if (this.player.x > 14000.0 && this.player.x <= 16000.0) {
+				this.juicy.jelly(this.player, 0.3);
+			} 
+			if (this.player.x > 16000.0 && this.player.x <= 18000.0) {
+				this.juicy.jelly(this.player, 0.2);
+			} 
+			if (this.player.x > 18000.0 && this.player.x <= 20000.0) {
+				this.juicy.jelly(this.player, 0.1);
+			}
+			
 			this.player.body.velocity.y = PLAYER_JUMP_SPEED;
 		}
 
@@ -201,6 +237,39 @@ Game11.Game.prototype = {
 					(this.game.input.activePointer.x > (this.game.width / 4)) &&
 					(this.game.input.activePointer.x < ((this.game.width / 2) + (this.game.width / 4))));
 		return isActive;
+	},
+	
+	colorTrip2: function() {
+		if (this.colorVar) {
+			this.rC = 0;
+			this.gC = 0;
+			this.bC = 0;
+		}
+		
+		if (this.rC >= 220) {
+			this.rI = -1;
+		}
+		if (this.rC <= 2) {
+			this.rI = 1;
+		}
+		if (this.gC >= 220) {
+			this.gI = -1;
+		}
+		if (this.gC <= 2) {
+			this.gI = 1;
+		}
+		if (this.bC >= 220) {
+			this.bI = -1;
+		}
+		if (this.bC <= 2) {
+			this.bI = 1;
+		}
+		
+		this.rC += (Math.abs(Math.sin(this.game.time.now * (180 / 3.14))) * 1.2) * this.rI;
+		this.gC += (Math.abs(Math.sin(this.game.time.now * (180 / 3.14))) * 1.2) * this.gI;
+		this.bC += (Math.abs(Math.sin(this.game.time.now * (180 / 3.14))) * 1.2) * this.bI;
+		
+		this.game.stage.backgroundColor = (this.rC << 16) | (this.gC << 8) | (this.bC);
 	},
 	
 	colorTrip: function() {
