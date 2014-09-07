@@ -2,9 +2,9 @@ Game11.Game = function (game) {
     this.game = game;
 };
 
-	var PLAYER_MAX_SPEED = 750;		//Player max speed
+	var PLAYER_MAX_SPEED = 750;			//Player max speed
 	var PLAYER_ACCELERATION = 1500;		//Player acceleration
-	var PLAYER_DRAG = 600;				//Player drag, slide coefficient
+	var PLAYER_DRAG = 400;				//Player drag, slide coefficient
     var PLAYER_JUMP_SPEED = -1200; 		//Player jump
     var PLAYER_JUMP_HOLD = 150;  		//Hold the button for player to jump more
 	var GRAVITY = 2600; 				//Gravity constant
@@ -58,7 +58,7 @@ Game11.Game.prototype = {
         this.game.score = 0;
 
 		//Player
-        this.player = this.add.sprite(20000, this.game.world.height / 2, 'player');
+        this.player = this.add.sprite(50, 2000, 'player');
 		this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
 		this.player.animations.add('idle', [0]);
 		this.player.animations.add('walk', [1,2]);
@@ -79,11 +79,43 @@ Game11.Game.prototype = {
 			Phaser.Keyboard.SPACE
 		]);
 		
+		//Coins
+        this.extra1 = this.game.add.sprite(1080, 2040, 'coin');  		this.game.physics.enable(this.extra1, Phaser.Physics.ARCADE);		this.extra1.body.collideWorldBounds = true;
+        this.extra2 = this.game.add.sprite(708, 2316, 'coin');			this.game.physics.enable(this.extra2, Phaser.Physics.ARCADE);		this.extra2.body.collideWorldBounds = true;
+        this.extra3 = this.game.add.sprite(708, 2388, 'coin');			this.game.physics.enable(this.extra3, Phaser.Physics.ARCADE);		this.extra3.body.collideWorldBounds = true;
+        this.extra4 = this.game.add.sprite(3120, 324, 'coin');			this.game.physics.enable(this.extra4, Phaser.Physics.ARCADE);		this.extra4.body.collideWorldBounds = true;
+        this.extra5 = this.game.add.sprite(6900, 2172, 'coin');			this.game.physics.enable(this.extra5, Phaser.Physics.ARCADE);		this.extra5.body.collideWorldBounds = true;
+        this.extra6 = this.game.add.sprite(15180, 756, 'coin');			this.game.physics.enable(this.extra6, Phaser.Physics.ARCADE);		this.extra6.body.collideWorldBounds = true;
+        this.extra7 = this.game.add.sprite(20024, 1236, 'coin');		this.game.physics.enable(this.extra7, Phaser.Physics.ARCADE);		this.extra7.body.collideWorldBounds = true;
+		this.extra1.body.allowGravity = false;		this.extra1.body.gravity = 0;
+		this.extra2.body.allowGravity = false;		this.extra2.body.gravity = 0;
+		this.extra3.body.allowGravity = false;		this.extra3.body.gravity = 0;
+		this.extra4.body.allowGravity = false;		this.extra4.body.gravity = 0;
+		this.extra5.body.allowGravity = false;		this.extra5.body.gravity = 0;
+		this.extra6.body.allowGravity = false;		this.extra6.body.gravity = 0;
+		this.extra7.body.allowGravity = false;		this.extra7.body.gravity = 0;
+		this.extra1.anchor.setTo(0.5, 0.5);
+		this.extra2.anchor.setTo(0.5, 0.5);
+		this.extra3.anchor.setTo(0.5, 0.5);
+		this.extra4.anchor.setTo(0.5, 0.5);
+		this.extra5.anchor.setTo(0.5, 0.5);
+		this.extra6.anchor.setTo(0.5, 0.5);
+		this.extra7.anchor.setTo(0.5, 0.5);
+		this.game.add.tween(this.extra1.scale).to( {x: 0.8, y: 0.8}, 1000, Phaser.Easing.Back.Linear, true, Number.MAX_VALUE, true).yoyo(true);
+		this.game.add.tween(this.extra2.scale).to( {x: 0.8, y: 0.8}, 1000, Phaser.Easing.Back.Linear, true, Number.MAX_VALUE, true).yoyo(true);
+		this.game.add.tween(this.extra3.scale).to( {x: 0.8, y: 0.8}, 1000, Phaser.Easing.Back.Linear, true, Number.MAX_VALUE, true).yoyo(true);
+		this.game.add.tween(this.extra4.scale).to( {x: 0.8, y: 0.8}, 1000, Phaser.Easing.Back.Linear, true, Number.MAX_VALUE, true).yoyo(true);
+		this.game.add.tween(this.extra5.scale).to( {x: 0.8, y: 0.8}, 1000, Phaser.Easing.Back.Linear, true, Number.MAX_VALUE, true).yoyo(true);
+		this.game.add.tween(this.extra6.scale).to( {x: 0.8, y: 0.8}, 1000, Phaser.Easing.Back.Linear, true, Number.MAX_VALUE, true).yoyo(true);
+		this.game.add.tween(this.extra7.scale).to( {x: 0.8, y: 0.8}, 1000, Phaser.Easing.Back.Linear, true, Number.MAX_VALUE, true).yoyo(true);
+		
 		//Audio
-		//this.landSound = game.add.audio('land');
+		this.winSound = game.add.audio('win_sound');
+		this.extraSound = game.add.audio('extra_sound');
+		this.jumpSound = game.add.audio('jump_sound');
 
 		//FPS Text
-		game.time.advancedTiming = true;
+		this.game.time.advancedTiming = true;
 		this.textFPS = game.add.text(20, 20, '', { font: "12px Chunk", fill: "#ffffff", align: "center" });
         this.textFPS.anchor.setTo(0, 0);
 		this.textFPS.fixedToCamera = true;
@@ -92,6 +124,20 @@ Game11.Game.prototype = {
         this.textScore = game.add.text(game.camera.width - 20, 20, "SCORE: " + game.score, { font: "12px Chunk", fill: "#ffffff", align: "center" });
         this.textScore.anchor.setTo(1, 0);
 		this.textScore.fixedToCamera = true;
+		
+		//End Game
+		this.textEnd = game.add.text(this.game.world.width / 2, this.game.world.height / 2 - 200, 'CONGRATULATION', { font: "28px Chunk", fill: "#ffffff", align: "center" });
+        this.textEnd.anchor.setTo(0.5, 0.5);
+        this.textEnd.alpha = 0;
+		this.textEnd.fixedToCamera = true;
+		this.textEnd2 = game.add.text(this.game.world.width / 2, this.game.world.height / 2, 'YOU GOT THE 7 COINS', { font: "20px Chunk", fill: "#ffffff", align: "center" });
+        this.textEnd2.anchor.setTo(0.5, 0.5);
+        this.textEnd2.alpha = 0;
+		this.textEnd2.fixedToCamera = true;
+		this.textEnd3 = game.add.text(this.game.world.width / 2, this.game.world.height / 2 + 150, 'PRESS ESCAPE TO LEAVE', { font: "14px Chunk", fill: "#ffffff", align: "center" });
+        this.textEnd3.anchor.setTo(0.5, 0.5);
+        this.textEnd3.alpha = 0;
+		this.textEnd3.fixedToCamera = true;
 		
 		//Initialize Pause function
 		Pause.init();
@@ -122,19 +168,37 @@ Game11.Game.prototype = {
 				this.colorVar = true;
 			}
 		
-			//Check if it's alive
-			if (!this.checkAlive()) {
-				this.quitGame();
+			if (!this.dead) {
+				//Check if it's alive
+				if (!this.checkAlive()) {
+					this.quitGame();
+				}
+
+				//Set collision callbacks
+				this.game.physics.arcade.collide(this.player, this.layer);
+				this.game.physics.arcade.collide(this.extra1, this.layer);	
+				this.game.physics.arcade.collide(this.extra2, this.layer);	
+				this.game.physics.arcade.collide(this.extra3, this.layer);	
+				this.game.physics.arcade.collide(this.extra4, this.layer);	
+				this.game.physics.arcade.collide(this.extra5, this.layer);	
+				this.game.physics.arcade.collide(this.extra6, this.layer);	
+				this.game.physics.arcade.collide(this.extra7, this.layer);	
+				this.game.physics.arcade.overlap(this.player, this.extra1, this.getExtraCallback, null, this);
+				this.game.physics.arcade.overlap(this.player, this.extra2, this.getExtraCallback, null, this);
+				this.game.physics.arcade.overlap(this.player, this.extra3, this.getExtraCallback, null, this);
+				this.game.physics.arcade.overlap(this.player, this.extra4, this.getExtraCallback, null, this);
+				this.game.physics.arcade.overlap(this.player, this.extra5, this.getExtraCallback, null, this);
+				this.game.physics.arcade.overlap(this.player, this.extra6, this.getExtraCallback, null, this);
+				this.game.physics.arcade.overlap(this.player, this.extra7, this.getExtraCallback, null, this);
+
+				//Update the player
+				this.updatePlayer();
+				
+				//Set score
+				this.textScore.text = "SCORE: " + this.game.score;
+			} else {
+				
 			}
-
-			//Set collision callbacks
-			this.game.physics.arcade.collide(this.player, this.layer);	
-
-			//Update the player
-			this.updatePlayer();
-			
-			//Set score
-			this.textScore.text = "SCORE: " + this.game.score;
         }		
     },
 	
@@ -206,6 +270,9 @@ Game11.Game.prototype = {
 			}
 			
 			this.player.body.velocity.y = PLAYER_JUMP_SPEED;
+			if (!this.jumpSound.isPlaying) {
+				this.jumpSound.play('', 0, 0.25);
+			}
 		}
 
 		//Don't allow variable jump height after the jump button is released
@@ -213,7 +280,12 @@ Game11.Game.prototype = {
 			this.canVariableJump = false;
 		}
 	},
-	
+
+    getExtraCallback: function(player, extra) {
+        extra.kill();
+        this.game.score += 111;
+        this.extraSound.play('', 0, 0.5);
+    },	
 
 	leftInputIsActive: function() {
 		var isActive = false;
@@ -300,15 +372,14 @@ Game11.Game.prototype = {
 	},
 	
 	checkAlive: function() {
-		return true;
+		return (this.game.score != 777);
     },
 
 	quitGame: function () {
 		//Game Over. Go to GameOver Screen
         if (!this.dead) {
             this.dead = true;
-			this.lostSound.play();
-			this.player.kill();
+			this.winSound.play('', 0, 0.5);
 			Fade.fadeOut('GameOver');
         }
 	}

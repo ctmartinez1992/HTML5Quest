@@ -24,11 +24,14 @@ Game11.Preloader.prototype = {
 		//Images
 		this.load.image('icon_volume', 'assets/icon_volume.png');
 		this.load.image('icon_volume_hover', 'assets/icon_volume_hover.png');
-		this.load.image('ground', 'assets/ground.png');
+		this.load.image('coin', 'assets/coin.png');
 		
 		//Audio
-        this.load.audio('music', 'assets/sounds/music.mp3');
+        this.load.audio('music', 'assets/sounds/Chiptune_Motorcade.mp3');
         this.load.audio('pause_music', 'assets/sounds/pause_music.mp3');
+        this.load.audio('win_sound', 'assets/sounds/win.wav');
+        this.load.audio('extra_sound', 'assets/sounds/extra.wav');
+        this.load.audio('jump_sound', 'assets/sounds/jump.wav');
 	},
 
 	create: function () {
