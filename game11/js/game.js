@@ -58,7 +58,7 @@ Game11.Game.prototype = {
         this.game.score = 0;
 
 		//Player
-        this.player = this.add.sprite(50, 2000, 'player');
+        this.player = this.add.sprite(100, 2000, 'player');
 		this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
 		this.player.animations.add('idle', [0]);
 		this.player.animations.add('walk', [1,2]);
