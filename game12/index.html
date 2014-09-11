@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Game 12</title>
+		
+		<!--Library-->
+		<script type="text/javascript" src="js/phaser.js"></script>
+		<script type="text/javascript" src="js/juicy.js"></script>
+		
+		<!--Game stuff-->
+		<script type="text/javascript" src="js/boot.js"></script>
+		<script type="text/javascript" src="js/preloader.js"></script>
+		<script type="text/javascript" src="js/mainmenu.js"></script>
+		<script type="text/javascript" src="js/game.js"></script>
+		<script type="text/javascript" src="js/gameover.js"></script>
+		
+		<!--Helpful stuff-->
+		<script type="text/javascript" src="js/zhelp_fade.js"></script>
+		<script type="text/javascript" src="js/zhelp_volume.js"></script>
+		<script type="text/javascript" src="js/zhelp_pause.js"></script>
+		
+		<style type="text/css">
+			body {
+				background-color: #101010;
+				color: #ffffff;
+			}
+
+			canvas {
+				display : block;
+				margin : auto;
+			}
+
+			@font-face {
+				font-family: "Chunk";
+				font-weight: normal;
+				src: url("assets/fonts/8bit.ttf") format("truetype");
+			}
+		</style>
+	</head>
+	<body>
+	<div id="gameContainer"></div>
+		<script type="text/javascript">
+			//Control variables
+			var doUpdate;
+			var paused;			
+			var game;
+			
+			window.onload = function() {
+				game = window.game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameContainer');
+				game.score = 0;
+
+				game.state.add('Boot', Game12.Boot);
+				game.state.add('Preloader', Game12.Preloader);
+				game.state.add('MainMenu', Game12.MainMenu);
+				game.state.add('Game', Game12.Game);
+				game.state.add('GameOver', Game12.GameOver);
+
+				game.state.start('Boot');
+			};
+		</script> 
+		<br><br>
+		Song is: Chiptune Motorcade by TeknoAXE is licensed under a Creative Commons Attribution 3.0 Unported License
+	</body>
+</html>
