@@ -25,35 +25,36 @@ Game12.Game.prototype = {
 		//Player score
         this.game.score = 0;
 		
-		//Camera follows player
-		this.game.camera.follow(this.player);
+		this.game.physics.arcade.gravity.y = GRAVITY;
+		
+		//Map creation
+		this.map = this.game.add.tilemap('map_json');
+		this.map.addTilesetImage('tiles_spritesheet', 'tileset');
+        this.map.setCollisionBetween(0, 1);
+		this.layer = this.map.createLayer('tiles');
+		this.layer.resizeWorld();
 		
 		//Capture certain keys to prevent their default actions in the browser.
 		//This is only necessary because this is an HTML5 game. Games on other platforms may not need code like this.
 		this.game.input.keyboard.addKeyCapture([
-			Phaser.Keyboard.ONE
-			Phaser.Keyboard.NUMPAD_1
-			Phaser.Keyboard.TWO
+			Phaser.Keyboard.ONE,
+			Phaser.Keyboard.NUMPAD_1,
+			Phaser.Keyboard.TWO,
 			Phaser.Keyboard.NUMPAD_2
 		]);
-		
-		//Ground
-		for(x = 0; x < this.game.width; x += 32) {
-			this.game.add.image(x, this.game.height - 32, 'ground');
-		}
 		
 		//Crates
 		var MONSTERS = 50;
 		this.monsterGroup = this.game.add.group();
 		this.monsterGroup.enableBody = true;
 		this.monsterGroup.physicsBodyType = Phaser.Physics.ARCADE;
-		this.monsterGroup.createMultiple(MONSTERS, 'cyclops', 0);
+		this.monsterGroup.createMultiple(MONSTERS, 'crate1', 0);
 		this.monsterTimer = 0;
 
 		//Explosions and lightning
 		this.explosionGroup = this.game.add.group();
 		this.lightningBitmap = this.game.add.bitmapData(200, 1000);
-		this.lightning = this.game.add.image(this.game.width/2, 80, this.lightningBitmap);
+		this.lightning = this.game.add.image(this.game.width / 2, 80, this.lightningBitmap);
 		this.lightning.filters = [ this.game.add.filter('Glow') ];
 		this.lightning.anchor.setTo(0.5, 0);
 
@@ -108,10 +109,14 @@ Game12.Game.prototype = {
 				//Update the player
 				this.updatePlayer();
 				
+				//Collision
+				this.game.physics.arcade.collide(this.monsterGroup, this.layer);
+				this.game.physics.arcade.collide(this.monsterGroup);
+				
 				//New crate
 				this.monsterTimer -= this.game.time.elapsed;
 				if (this.monsterTimer <= 0) {
-					this.monsterTimer = this.game.rnd.integerInRange(150, 500);
+					this.monsterTimer = this.game.rnd.integerInRange(250, 750);
 					this.createNewMonster();
 				}
 
@@ -191,13 +196,29 @@ Game12.Game.prototype = {
 	createNewMonster: function() {
 		var monster = this.monsterGroup.getFirstDead(); // Recycle a dead monster
 		if (monster) {
-			monster.reset(this.game.width + 100, this.game.height - 48); // Position on ground
+			var rndI = this.game.rnd.integerInRange(0, 4)
+			if (rndI == 1) {
+				monster.reset(this.game.width + 20, this.game.height - 80); // Position on ground
+				monster.body.velocity.setTo(0, 0); // Stop moving
+				monster.body.velocity.x = -100; // Move left
+			}
+			if (rndI == 2) {
+				monster.reset(-20, this.game.height - 80); // Position on ground
+				monster.body.velocity.setTo(0, 0); // Stop moving
+				monster.body.velocity.x = 100; // Move right
+			}
+			if (rndI == 3) {
+				monster.reset(this.game.width + 20, this.game.height - 300);
+				monster.body.velocity.setTo(0, 0); // Stop moving
+				monster.body.velocity.x = -100; // Move left
+			}
+			if (rndI == 4) {
+				monster.reset(-20, this.game.height - 500);
+				monster.body.velocity.x = 100; // Move left
+			}
 			monster.revive(); // Set "alive"
-			monster.body.velocity.setTo(0, 0); // Stop moving
 			monster.body.acceleration.setTo(0, 0); // Stop accelerating
-			monster.body.velocity.x = -100; // Move left
 			monster.rotation = 0; // Reset rotation
-			monster.frame = 0; // Set animation frame to 0
 			monster.anchor.setTo(0.5, 0.5); // Center texture
 		}
 	},	
@@ -318,14 +339,14 @@ Game12.Game.prototype = {
 	},
 	
 	checkAlive: function() {
-		return false;
+		return true;
     },
 
 	quitGame: function () {
 		//Game Over. Go to GameOver Screen
         if (!this.dead) {
             this.dead = true;
-			this.winSound.play('', 0, 0.5);
+			//this.winSound.play('', 0, 0.5);
 			Fade.fadeOut('GameOver');
         }
 	}

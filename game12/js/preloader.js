@@ -15,8 +15,8 @@ Game12.Preloader.prototype = {
 		//Menu
 		
 		//Map
-		//this.load.image('tileset', 'assets/tiles_spritesheet.png');
-		//this.load.tilemap('map_json', 'assets/map_json.json', null, Phaser.Tilemap.TILED_JSON);
+		this.load.image('tileset', 'assets/tiles_spritesheet.png');
+		this.load.tilemap('map_json', 'assets/map_json.json', null, Phaser.Tilemap.TILED_JSON);
 		
 		//Sprite sheets
 		//this.load.spritesheet('player', 'assets/player.png', 24, 24, 3);
