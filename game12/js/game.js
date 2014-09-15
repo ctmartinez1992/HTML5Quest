@@ -21,6 +21,8 @@ Game12.Game.prototype = {
 		doUpdate = true;
 		paused = false;
 		this.dead = false;
+		
+		lostCrates = 0
 
 		//Player score
         this.game.score = 0;
@@ -79,6 +81,9 @@ Game12.Game.prototype = {
         this.textScore = game.add.text(game.camera.width - 20, 20, "SCORE: " + game.score, { font: "12px Chunk", fill: "#ffffff", align: "center" });
         this.textScore.anchor.setTo(1, 0);
 		this.textScore.fixedToCamera = true;
+        this.crateScore = game.add.text(game.camera.width - 20, 40, "LOST: " + lostCrates + "/3", { font: "12px Chunk", fill: "#ffffff", align: "center" });
+        this.crateScore.anchor.setTo(1, 0);
+		this.crateScore.fixedToCamera = true;
 		
 		//Initialize Pause function
 		Pause.init();
@@ -124,6 +129,7 @@ Game12.Game.prototype = {
 				this.monsterGroup.forEachAlive(function(monster) {
 					if (monster.x < -64 || monster.x > this.game.width + 25 || monster.y > this.game.height) {
 						monster.kill();
+						lostCrates++;
 					}
 				}, this);
 
@@ -132,7 +138,8 @@ Game12.Game.prototype = {
 					//Destroy within 64 pixels
 					this.monsterGroup.forEachAlive(function(monster) {
 						if (this.game.math.distance(this.game.input.activePointer.x, this.game.input.activePointer.y, monster.x, monster.y) < 64) {
-							monster.kill()
+							monster.kill();
+							this.game.score++;
 
 							// Create an explosion
 							this.getExplosion(monster.x, monster.y);
@@ -183,6 +190,7 @@ Game12.Game.prototype = {
 				
 				//Set score
 				this.textScore.text = "SCORE: " + this.game.score;
+				this.crateScore.text = "LOST: " + lostCrates + "/3";
 			} else {
 				
 			}
@@ -339,7 +347,7 @@ Game12.Game.prototype = {
 	},
 	
 	checkAlive: function() {
-		return true;
+		return !(lostCrates >= 3);
     },
 
 	quitGame: function () {
