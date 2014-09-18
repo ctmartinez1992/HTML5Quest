@@ -1,0 +1,267 @@
+Game13.Game2 = function (game) {
+    this.game = game;
+};
+
+	var DRAG = 0;						//Drag, slide coefficient
+	var GRAVITY = 50; 					//Gravity constant
+	
+	var PLAYER_MAX_SPEED = 750;			//Player max speed
+	var PLAYER_ACCELERATION = 1500;		//Player acceleration
+    var PLAYER_JUMP_SPEED = -1200; 		//Player jump
+    var PLAYER_JUMP_HOLD = 150;  		//Hold the button for player to jump more
+	
+	var SHIP_ROTATION_SPEED = 180; 		//The ship rotation
+    var SHIP_ACCELERATION = 200; 		//The ship acceleration
+    var SHIP_MAX_SPEED = 250; 			//The ships max speed
+
+Game13.Game2.prototype = {
+	create: function () {
+		//Necessary stuff
+        this.sound.stopAll();
+		
+		//juicy juicy
+		this.juicy = this.game.plugins.add(new Phaser.Plugin.Juicy(this));
+		
+		//Control variables
+		doUpdate = true;
+		paused = false;
+		this.dead = false;
+
+		//Player score
+        this.game.score = 0;
+		
+		this.hp = 1000;
+		this.maxhp = 1000;
+		
+		//Map creation
+		/*this.map = this.game.add.tilemap('map_json');
+		this.map.addTilesetImage('tiles_spritesheet', 'tileset');
+        this.map.setCollisionBetween(0, 1);
+		this.layer = this.map.createLayer('tiles');
+		this.layer.resizeWorld();*/
+		
+		//Pad
+		this.pad = this.game.add.sprite(500, 500, 'pad');
+		this.pad.anchor.setTo(0.5, 0.5);
+		
+		//Ship
+		this.ship = this.game.add.sprite(0, 0, 'ship');
+		this.ship.anchor.setTo(0.5, 0.5);
+		this.ship.angle = -90;
+
+		this.game.physics.enable(this.ship, Phaser.Physics.ARCADE);
+		this.game.physics.arcade.gravity.y = GRAVITY;
+		this.ship.body.maxVelocity.setTo(SHIP_MAX_SPEED, SHIP_MAX_SPEED);
+		this.ship.body.bounce.setTo(0.25, 0.25);
+		this.ship.body.drag.setTo(DRAG, DRAG);
+		this.resetShip();
+
+		this.ground = this.game.add.group();
+		for(var x = 0; x < this.game.width; x += 32) {
+			var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
+			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+			groundBlock.body.immovable = true;
+			groundBlock.body.allowGravity = false;
+			this.ground.add(groundBlock);
+		}
+		for(var x = 0; x < this.game.width / 3; x += 32) {
+			var groundBlock = this.game.add.sprite(x, this.game.height - 200, 'ground');
+			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+			groundBlock.body.immovable = true;
+			groundBlock.body.allowGravity = false;
+			this.ground.add(groundBlock);
+		}
+		for(var x = (this.game.width / 3) * 2; x < this.game.width; x += 32) {
+			var groundBlock = this.game.add.sprite(x, this.game.height - 200, 'ground');
+			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+			groundBlock.body.immovable = true;
+			groundBlock.body.allowGravity = false;
+			this.ground.add(groundBlock);
+		}
+
+		// Create a group for explosions
+		this.explosionGroup = this.game.add.group();
+		
+		//Capture certain keys to prevent their default actions in the browser.
+		//This is only necessary because this is an HTML5 game. Games on other platforms may not need code like this.
+		this.game.input.keyboard.addKeyCapture([
+			Phaser.Keyboard.LEFT,
+			Phaser.Keyboard.RIGHT,
+			Phaser.Keyboard.UP,
+			Phaser.Keyboard.DOWN
+		]);
+		
+		//Audio
+		//this.winSound = game.add.audio('win_sound');
+
+		//FPS Text
+		this.game.time.advancedTiming = true;
+		this.textFPS = game.add.text(20, 20, '', { font: "12px Chunk", fill: "#ffffff", align: "center" });
+        this.textFPS.anchor.setTo(0, 0);
+		this.textFPS.fixedToCamera = true;
+		
+		//Score Text
+        this.textScore = game.add.text(game.camera.width - 20, 20, "SCORE: " + game.score, { font: "12px Chunk", fill: "#ffffff", align: "center" });
+        this.textScore.anchor.setTo(1, 0);
+		this.textScore.fixedToCamera = true;
+		this.textFPS.fixedToCamera = true;
+		
+		//HP Text
+        this.textHP = game.add.text(game.camera.width / 2, 20, "HP: " + this.hp + "/" + this.maxhp, { font: "12px Chunk", fill: "#ffffff", align: "center" });
+        this.textHP.anchor.setTo(0.5, 0);
+		this.textHP.fixedToCamera = true;
+		
+		//Initialize Pause function
+		Pause.init();
+		
+		//Volume handler
+		Volume.init(0, game.camera.height - 26);
+	},
+
+	update: function () {
+		//Quit game if user wants
+        if(this.game.input.keyboard.isDown(Phaser.Keyboard.ESC)) {            
+			game.state.start('MainMenu');
+        }
+		
+		//Set FPS
+		if (this.game.time.fps !== 0) {
+			this.textFPS.setText(game.time.fps + ' FPS');
+		}
+		
+		//doUpdate
+		if (doUpdate) {		
+			if (!this.dead) {
+				//Check if it's alive
+				if (!this.checkAlive()) {
+					this.quitGame();
+				}				
+
+				this.game.physics.arcade.collide(this.ship, this.ground);
+				this.game.physics.arcade.collide(this.ship, this.pad);
+				if (this.ship.x > this.game.width) {
+					this.ship.x = 0;
+				}					
+				if (this.ship.x < 0) {
+					this.ship.x = this.game.width;
+				}
+
+				//Update the player
+				this.updatePlayer();
+				
+				//Set score
+				this.textScore.text = "SCORE: " + this.game.score;
+			} else {
+				
+			}
+        }		
+    },
+	
+	updatePlayer: function() {
+		if (this.leftInputIsActive()) {
+			this.ship.body.angularVelocity = -SHIP_ROTATION_SPEED;
+		} else if (this.rightInputIsActive()) {
+			this.ship.body.angularVelocity = SHIP_ROTATION_SPEED;
+		} else {
+			this.ship.body.angularVelocity = 0;
+		}
+
+		var onTheGround = this.ship.body.touching.down;
+		var onThePad = this.pad.body.touching.up;
+
+		if (onTheGround && onThePad) {
+			if (Math.abs(this.ship.body.velocity.y) > 20 || Math.abs(this.ship.body.velocity.x) > 30) {
+				this.hp -= (this.ship.body.velocity.y + this.ship.body.velocity.x) * 0.6;
+			} else {
+				this.ship.body.angularVelocity = 0;
+				this.ship.body.velocity.setTo(0, 0);
+				this.ship.angle = -90;
+				Fade.fadeOut('Game2');
+			}
+		} else if (onTheGround && !onThePad) {
+			if (Math.abs(this.ship.body.velocity.y) > 20 || Math.abs(this.ship.body.velocity.x) > 30) {
+				this.hp -= (this.ship.body.velocity.y + this.ship.body.velocity.x) * 0.9;
+			} else {
+				this.ship.body.angularVelocity = 0;
+				this.ship.body.velocity.setTo(0, 0);
+				this.ship.angle = -90;
+			}
+		}
+		
+		if (this.hp <= 0) {
+			this.getExplosion(this.ship.x, this.ship.y);
+			this.resetShip();
+			this.hp = this.maxhp;
+		}
+
+		if (this.upInputIsActive()) {
+			this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * SHIP_ACCELERATION;
+			this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * SHIP_ACCELERATION;
+		} else {
+			this.ship.body.acceleration.setTo(0, 0);
+		}
+	},	
+	
+	checkAlive: function() {
+		return true;
+    },
+
+	quitGame: function () {
+		//Game Over. Go to GameOver Screen
+        if (!this.dead) {
+            this.dead = true;
+			//this.winSound.play('', 0, 0.5);
+			Fade.fadeOut('GameOver');
+        }
+	},
+	
+	getExplosion: function(x, y) {
+		var explosion = this.explosionGroup.getFirstDead();
+		if (explosion === null) {
+			explosion = this.game.add.sprite(0, 0, 'explosion');
+			explosion.anchor.setTo(0.5, 0.5);
+			
+			var animation = explosion.animations.add('boom', [0, 1, 2, 3], 60, false);
+			animation.killOnComplete = true;
+			this.explosionGroup.add(explosion);
+		}
+
+		explosion.revive();
+		explosion.x = x;
+		explosion.y = y;
+		explosion.angle = this.game.rnd.integerInRange(0, 360);
+		explosion.animations.play('boom');
+		
+		return explosion;
+	},
+
+	resetShip: function() {
+		this.ship.x = 32;
+		this.ship.y = 32;
+		this.ship.body.acceleration.setTo(0, 0);
+
+		this.ship.angle = this.game.rnd.integerInRange(-180, 180);
+		this.ship.body.velocity.setTo(this.game.rnd.integerInRange(100, 200), 0);
+	},
+
+	leftInputIsActive: function() {
+		var isActive = false;
+		isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
+		isActive |= (this.game.input.activePointer.isDown && this.game.input.activePointer.x < this.game.width / 4);
+		return isActive;
+	},
+
+	rightInputIsActive: function() {
+		var isActive = false;
+		isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
+		isActive |= (this.game.input.activePointer.isDown && this.game.input.activePointer.x > this.game.width / 2 + this.game.width / 4);
+		return isActive;
+	},
+
+	upInputIsActive: function() {
+		var isActive = false;
+		isActive = this.input.keyboard.isDown(Phaser.Keyboard.UP);
+		isActive |= (this.game.input.activePointer.isDown && this.game.input.activePointer.x > this.game.width / 4 && this.game.input.activePointer.x < this.game.width / 2 + this.game.width / 4);
+		return isActive;
+	}
+};
