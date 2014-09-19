@@ -1,4 +1,7 @@
-Game13 = {};
+Game13 = {
+	lives: 10,
+	maxlives: 10
+};
 
 Game13.Boot = function (game) {
 	orientated = false;

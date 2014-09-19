@@ -2,10 +2,14 @@ Game13.MainMenu = function (game) {
     this.game = game;
     this.game.highscore = 0;
 };
+	
 
 Game13.MainMenu.prototype = {
 	create: function () {
         this.sound.stopAll();
+		
+		Game13.lives = 10;
+		Game13.maxlives = 10;
 		
         this.textTitle = game.add.text(game.camera.width / 2, game.camera.height / 2 - 200, "LANDING", { font: "28px Chunk", fill: "#ffffff", align: "center" });
         this.textTitle.anchor.setTo(0.5, 0.5);
@@ -54,6 +58,6 @@ Game13.MainMenu.prototype = {
 	},
 
 	startGame: function () {
-		Fade.fadeOut('Game');
+		Fade.fadeOut('Game3');
 	}
 };

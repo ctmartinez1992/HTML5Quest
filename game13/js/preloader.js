@@ -26,6 +26,7 @@ Game13.Preloader.prototype = {
 		this.load.image('icon_volume_hover', 'assets/icon_volume_hover.png');
 		this.load.image('ship', 'assets/ship.png');
 		this.load.image('pad', 'assets/pad.png');
+		this.load.image('block', 'assets/block.png');
 		this.load.image('ground', 'assets/ground.png');
 		this.load.image('life', 'assets/life.png');
 		this.game.load.spritesheet('explosion', 'assets/explosion.png', 128, 128);

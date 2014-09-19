@@ -1,4 +1,4 @@
-Game13.Game = function (game) {
+Game13.Game2 = function (game) {
     this.game = game;
 };
 
@@ -14,13 +14,15 @@ Game13.Game = function (game) {
     var SHIP_ACCELERATION = 200; 		//The ship acceleration
     var SHIP_MAX_SPEED = 250; 			//The ships max speed
 
-Game13.Game.prototype = {
+Game13.Game2.prototype = {
 	create: function () {
 		//Necessary stuff
         this.sound.stopAll();
 		
 		//juicy juicy
 		this.juicy = this.game.plugins.add(new Phaser.Plugin.Juicy(this));
+		
+		this.game.stage.backgroundColor = 0x224466;
 		
 		//Control variables
 		doUpdate = true;
@@ -32,8 +34,6 @@ Game13.Game.prototype = {
 		
 		this.hp = 1000;
 		this.maxhp = 1000;
-		this.lives = 10;
-		this.maxlives = 10;
 		
 		//Map creation
 		/*this.map = this.game.add.tilemap('map_json');
@@ -44,14 +44,14 @@ Game13.Game.prototype = {
 		
 		//Life
 		this.livesGroup = this.game.add.group();
-		var liveStartX = -((25 * 10) / 2);
+		var liveStartX = -((25 * Game13.lives) / 2);
 		for(var x = liveStartX; x < -liveStartX; x += 25) {
 			var lifeBlock = this.game.add.sprite((this.game.world.width / 2) + x, 40, 'life');
 			this.livesGroup.add(lifeBlock);
 		}
 		
 		//Pad
-		this.pad = this.game.add.sprite(500, this.game.world.height - 32, 'pad');
+		this.pad = this.game.add.sprite(this.game.world.width / 2, this.game.world.height - 32, 'pad');
 		this.pad.anchor.setTo(0.5, 1);
 		this.game.physics.enable(this.pad, Phaser.Physics.ARCADE);
 		this.pad.body.immovable = true;
@@ -137,7 +137,7 @@ Game13.Game.prototype = {
 				}				
 
 				this.game.physics.arcade.collide(this.ship, this.ground);
-				this.game.physics.arcade.collide(this.ship, this.pad);
+				this.game.physics.arcade.collide(this.ship, this.pad, this.searchWin);
 				this.game.physics.arcade.collide(this.ground, this.pad);
 				if (this.ship.x > this.game.width) {
 					this.ship.x = 0;
@@ -168,32 +168,32 @@ Game13.Game.prototype = {
 		}
 
 		var onTheGround = this.ship.body.touching.down;
+		var onTheTop = this.ship.body.touching.up;
+		var onTheLeft = this.ship.body.touching.left;
+		var onTheRight = this.ship.body.touching.right;
 		var onThePad = this.pad.body.touching.up;
 
-		if (onTheGround && onThePad) {
+		if (onTheTop || onTheLeft || onTheRight || onTheGround) {
 			if (Math.abs(this.ship.body.velocity.y) > 20 || Math.abs(this.ship.body.velocity.x) > 30) {
-				this.hp -= Math.ceil(Math.abs((this.ship.body.velocity.y + this.ship.body.velocity.x)) * 0.4);
-			} else {
-				this.ship.body.angularVelocity = 0;
-				this.ship.body.velocity.setTo(0, 0);
-				this.ship.angle = -90;
-				Fade.fadeOut('Game2');
+				this.hp -= Math.ceil(Math.abs((this.ship.body.velocity.y + this.ship.body.velocity.x)) * 3.0);
+			} else if (Math.abs(this.ship.body.velocity.y) > 12 || Math.abs(this.ship.body.velocity.x) > 18) {
+				this.hp -= Math.ceil(Math.abs((this.ship.body.velocity.y + this.ship.body.velocity.x)) * 0.5);
 			}
-		} else if (onTheGround && !onThePad) {
-			if (Math.abs(this.ship.body.velocity.y) > 20 || Math.abs(this.ship.body.velocity.x) > 30) {
-				this.hp -= Math.ceil(Math.abs((this.ship.body.velocity.y + this.ship.body.velocity.x)) * 0.6);
-			} else {
-				this.ship.body.angularVelocity = 0;
-				this.ship.body.velocity.setTo(0, 0);
-				this.ship.angle = -90;
-			}
+		}
+		
+		if (onThePad && Math.abs(this.ship.body.velocity.y) <= 20 && Math.abs(this.ship.body.velocity.x) <= 30 && this.ship.angle < -75 && this.ship.angle > -105) {
+			this.game.score += this.hp;
+			Fade.fadeOut('Game2');
+			this.ship.body.angularVelocity = 0;
+			this.ship.body.velocity.setTo(0, 0);
+			this.ship.angle = -90;
 		}
 		
 		if (this.hp <= 0) {
 			this.getExplosion(this.ship.x, this.ship.y);
 			this.resetShip();
 			this.hp = this.maxhp;
-			this.lives -= 1;
+			Game13.lives -= 1;
 			this.livesGroup.remove(this.livesGroup.getTop());
 		}
 
@@ -203,10 +203,14 @@ Game13.Game.prototype = {
 		} else {
 			this.ship.body.acceleration.setTo(0, 0);
 		}
-	},	
+	},
+	
+	searchWin: function() {
+		
+	},
 	
 	checkAlive: function() {
-		return !(this.lives <= 0);
+		return !(Game13.lives <= 0);
     },
 
 	quitGame: function () {

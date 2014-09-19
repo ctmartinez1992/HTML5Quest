@@ -1,4 +1,4 @@
-Game13.Game2 = function (game) {
+Game13.Game3 = function (game) {
     this.game = game;
 };
 
@@ -14,7 +14,7 @@ Game13.Game2 = function (game) {
     var SHIP_ACCELERATION = 200; 		//The ship acceleration
     var SHIP_MAX_SPEED = 250; 			//The ships max speed
 
-Game13.Game2.prototype = {
+Game13.Game3.prototype = {
 	create: function () {
 		//Necessary stuff
         this.sound.stopAll();
@@ -51,7 +51,7 @@ Game13.Game2.prototype = {
 		}
 		
 		//Pad
-		this.pad = this.game.add.sprite(this.game.world.width / 2, this.game.world.height - 32, 'pad');
+		this.pad = this.game.add.sprite(this.game.world.width / 2 + 180, this.game.world.height - 32, 'pad');
 		this.pad.anchor.setTo(0.5, 1);
 		this.game.physics.enable(this.pad, Phaser.Physics.ARCADE);
 		this.pad.body.immovable = true;
@@ -77,15 +77,15 @@ Game13.Game2.prototype = {
 			groundBlock.body.allowGravity = false;
 			this.ground.add(groundBlock);
 		}
-		for(var y = 256; y < this.game.height - 32; y += 32) {
-			var groundBlock = this.game.add.sprite(this.game.width / 2 - 80, y, 'block');
+		for(var y = 352; y < this.game.height - 32; y += 32) {
+			var groundBlock = this.game.add.sprite(this.game.width / 2 + 100, y, 'block');
 			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
 			groundBlock.body.immovable = true;
 			groundBlock.body.allowGravity = false;
 			this.ground.add(groundBlock);
 		}
-		for(var y = 256; y < this.game.height - 32; y += 32) {
-			var groundBlock = this.game.add.sprite(this.game.width / 2 + 50, y, 'block');
+		for(var y = 352; y < this.game.height - 32; y += 32) {
+			var groundBlock = this.game.add.sprite(this.game.width / 2 + 230, y, 'block');
 			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
 			groundBlock.body.immovable = true;
 			groundBlock.body.allowGravity = false;

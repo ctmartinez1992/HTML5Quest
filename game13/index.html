@@ -13,6 +13,8 @@
 		<script type="text/javascript" src="js/preloader.js"></script>
 		<script type="text/javascript" src="js/mainmenu.js"></script>
 		<script type="text/javascript" src="js/game.js"></script>
+		<script type="text/javascript" src="js/game2.js"></script>
+		<script type="text/javascript" src="js/game3.js"></script>
 		<script type="text/javascript" src="js/gameover.js"></script>
 		
 		<!--Helpful stuff-->
@@ -47,7 +49,7 @@
 			var game;
 			
 			window.onload = function() {
-				game = window.game = new Phaser.Game(816, 600, Phaser.AUTO, 'gameContainer');
+				game = window.game = new Phaser.Game(816, 608, Phaser.AUTO, 'gameContainer');
 				game.score = 0;
 
 				game.state.add('Boot', Game13.Boot);
@@ -55,6 +57,7 @@
 				game.state.add('MainMenu', Game13.MainMenu);
 				game.state.add('Game', Game13.Game);
 				game.state.add('Game2', Game13.Game2);
+				game.state.add('Game3', Game13.Game3);
 				game.state.add('GameOver', Game13.GameOver);
 
 				game.state.start('Boot');
