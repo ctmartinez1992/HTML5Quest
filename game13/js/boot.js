@@ -1,6 +1,7 @@
 Game13 = {
 	lives: 10,
-	maxlives: 10
+	maxlives: 10,
+	score: 0
 };
 
 Game13.Boot = function (game) {

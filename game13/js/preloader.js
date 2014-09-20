@@ -34,6 +34,7 @@ Game13.Preloader.prototype = {
 		//Audio
         this.load.audio('music', 'assets/sounds/Chiptune_Motorcade.mp3');
         this.load.audio('pause_music', 'assets/sounds/pause_music.mp3');
+        this.load.audio('explosion', 'assets/sounds/explosion.wav');
 	},
 
 	create: function () {

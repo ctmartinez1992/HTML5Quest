@@ -28,9 +28,7 @@ Game13.Game2.prototype = {
 		doUpdate = true;
 		paused = false;
 		this.dead = false;
-
-		//Player score
-        this.game.score = 0;
+		this.done = false;
 		
 		this.hp = 1000;
 		this.maxhp = 1000;
@@ -67,6 +65,7 @@ Game13.Game2.prototype = {
 		this.ship.body.maxVelocity.setTo(SHIP_MAX_SPEED, SHIP_MAX_SPEED);
 		this.ship.body.bounce.setTo(0.25, 0.25);
 		this.ship.body.drag.setTo(DRAG, DRAG);
+		this.ship.body.collideWorldBounds = true;
 		this.resetShip();
 
 		this.ground = this.game.add.group();
@@ -105,7 +104,7 @@ Game13.Game2.prototype = {
 		]);
 		
 		//Audio
-		//this.winSound = game.add.audio('win_sound');
+		this.explosionSound = game.add.audio('explosion');
 
 		//FPS Text
 		this.game.time.advancedTiming = true;
@@ -114,7 +113,7 @@ Game13.Game2.prototype = {
 		this.textFPS.fixedToCamera = true;
 		
 		//Score Text
-        this.textScore = game.add.text(game.camera.width - 20, 20, "SCORE: " + game.score, { font: "12px Chunk", fill: "#ffffff", align: "center" });
+        this.textScore = game.add.text(game.camera.width - 20, 20, "SCORE: " + Game13.score, { font: "12px Chunk", fill: "#ffffff", align: "center" });
         this.textScore.anchor.setTo(1, 0);
 		this.textScore.fixedToCamera = true;
 		this.textFPS.fixedToCamera = true;
@@ -164,7 +163,7 @@ Game13.Game2.prototype = {
 				this.updatePlayer();
 				
 				//Set score
-				this.textScore.text = "SCORE: " + this.game.score;
+				this.textScore.text = "SCORE: " + Game13.score;
 				this.textHP.text = "HP: " + this.hp + "/" + this.maxhp;
 			} else {
 				
@@ -196,14 +195,18 @@ Game13.Game2.prototype = {
 		}
 		
 		if (onThePad && Math.abs(this.ship.body.velocity.y) <= 20 && Math.abs(this.ship.body.velocity.x) <= 30 && this.ship.angle < -75 && this.ship.angle > -105) {
-			this.game.score += this.hp;
-			Fade.fadeOut('Game2');
+			if (!this.done) {
+				Game13.score += this.hp;
+			}
+			this.done = true;
+			Fade.fadeOut('Game3');
 			this.ship.body.angularVelocity = 0;
 			this.ship.body.velocity.setTo(0, 0);
 			this.ship.angle = -90;
 		}
 		
 		if (this.hp <= 0) {
+			this.explosionSound.play('', 0, 0.5);
 			this.getExplosion(this.ship.x, this.ship.y);
 			this.resetShip();
 			this.hp = this.maxhp;

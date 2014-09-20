@@ -1,4 +1,4 @@
-Game13.Game3 = function (game) {
+Game13.Game5 = function (game) {
     this.game = game;
 };
 
@@ -14,7 +14,7 @@ Game13.Game3 = function (game) {
     var SHIP_ACCELERATION = 200; 		//The ship acceleration
     var SHIP_MAX_SPEED = 250; 			//The ships max speed
 
-Game13.Game3.prototype = {
+Game13.Game5.prototype = {
 	create: function () {
 		//Necessary stuff
         this.sound.stopAll();
@@ -42,7 +42,7 @@ Game13.Game3.prototype = {
 		}
 		
 		//Pad
-		this.pad = this.game.add.sprite(this.game.world.width / 2 + 180, this.game.world.height - 32, 'pad');
+		this.pad = this.game.add.sprite(748, 320, 'pad');
 		this.pad.anchor.setTo(0.5, 1);
 		this.game.physics.enable(this.pad, Phaser.Physics.ARCADE);
 		this.pad.body.immovable = true;
@@ -62,6 +62,13 @@ Game13.Game3.prototype = {
 		this.resetShip();
 
 		this.ground = this.game.add.group();
+		for(var x = 656 ; x < this.game.width; x += 32) {
+			var groundBlock = this.game.add.sprite(x, 320, 'ground');
+			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+			groundBlock.body.immovable = true;
+			groundBlock.body.allowGravity = false;
+			this.ground.add(groundBlock);
+		}
 		for(var x = 0; x < this.game.width; x += 32) {
 			var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
 			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
@@ -69,29 +76,43 @@ Game13.Game3.prototype = {
 			groundBlock.body.allowGravity = false;
 			this.ground.add(groundBlock);
 		}
-		for(var y = 416; y < this.game.height - 32; y += 32) {
-			var groundBlock = this.game.add.sprite(this.game.width / 2 + 100, y, 'block');
+		for(var x = 0 ; x < this.game.width - 192; x += 128) {
+			var groundBlock = this.game.add.sprite(x, 160, 'block');
 			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
 			groundBlock.body.immovable = true;
 			groundBlock.body.allowGravity = false;
 			this.ground.add(groundBlock);
 		}
-		for(var y = 416; y < this.game.height - 32; y += 32) {
-			var groundBlock = this.game.add.sprite(this.game.width / 2 + 230, y, 'block');
+		for(var x = 32 ; x < this.game.width - 192; x += 64) {
+			var groundBlock = this.game.add.sprite(x, 192, 'block');
 			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
 			groundBlock.body.immovable = true;
 			groundBlock.body.allowGravity = false;
 			this.ground.add(groundBlock);
 		}
-		for(var y = 0; y < this.game.height - 192; y += 32) {
-			var groundBlock = this.game.add.sprite(this.game.width / 2 - 100, y, 'block');
+		for(var x = 64 ; x < this.game.width - 192; x += 128) {
+			var groundBlock = this.game.add.sprite(x, 224, 'block');
 			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
 			groundBlock.body.immovable = true;
 			groundBlock.body.allowGravity = false;
 			this.ground.add(groundBlock);
 		}
-		for(var y = 96; y < this.game.height - 32; y += 32) {
-			var groundBlock = this.game.add.sprite(this.game.width / 2 - 230, y, 'block');
+		for(var x = 128 ; x < this.game.width - 192; x += 128) {
+			var groundBlock = this.game.add.sprite(x, 320, 'block');
+			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+			groundBlock.body.immovable = true;
+			groundBlock.body.allowGravity = false;
+			this.ground.add(groundBlock);
+		}
+		for(var x = 160 ; x < this.game.width - 192; x += 64) {
+			var groundBlock = this.game.add.sprite(x, 352, 'block');
+			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+			groundBlock.body.immovable = true;
+			groundBlock.body.allowGravity = false;
+			this.ground.add(groundBlock);
+		}
+		for(var x = 192 ; x < this.game.width - 192; x += 128) {
+			var groundBlock = this.game.add.sprite(x, 384, 'block');
 			this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
 			groundBlock.body.immovable = true;
 			groundBlock.body.allowGravity = false;
@@ -206,7 +227,7 @@ Game13.Game3.prototype = {
 				Game13.score += this.hp;
 			}
 			this.done = true;
-			Fade.fadeOut('Game4');
+			Fade.fadeOut('Game5');
 			this.ship.body.angularVelocity = 0;
 			this.ship.body.velocity.setTo(0, 0);
 			this.ship.angle = -90;
