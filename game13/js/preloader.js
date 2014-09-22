@@ -32,9 +32,10 @@ Game13.Preloader.prototype = {
 		this.game.load.spritesheet('explosion', 'assets/explosion.png', 128, 128);
 		
 		//Audio
-        this.load.audio('music', 'assets/sounds/Chiptune_Motorcade.mp3');
+        this.load.audio('music', 'assets/sounds/Pixelated_Cosmos.mp3');
         this.load.audio('pause_music', 'assets/sounds/pause_music.mp3');
         this.load.audio('explosion', 'assets/sounds/explosion.wav');
+        this.load.audio('shipSound', 'assets/sounds/ship.wav');
 	},
 
 	create: function () {

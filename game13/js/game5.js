@@ -121,6 +121,7 @@ Game13.Game5.prototype = {
 
 		// Create a group for explosions
 		this.explosionGroup = this.game.add.group();
+		this.shipSound = game.add.audio('shipSound');
 		
 		//Capture certain keys to prevent their default actions in the browser.
 		//This is only necessary because this is an HTML5 game. Games on other platforms may not need code like this.
@@ -227,7 +228,7 @@ Game13.Game5.prototype = {
 				Game13.score += this.hp;
 			}
 			this.done = true;
-			Fade.fadeOut('Game5');
+			Fade.fadeOut('GameWin');
 			this.ship.body.angularVelocity = 0;
 			this.ship.body.velocity.setTo(0, 0);
 			this.ship.angle = -90;
@@ -245,8 +246,12 @@ Game13.Game5.prototype = {
 		if (this.upInputIsActive()) {
 			this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * SHIP_ACCELERATION;
 			this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * SHIP_ACCELERATION;
+			if (!this.shipSound.isPlaying) {
+				this.shipSound.play('', 0, 0.3, true);
+			}
 		} else {
 			this.ship.body.acceleration.setTo(0, 0);
+			this.shipSound.stop();
 		}
 	},
 	

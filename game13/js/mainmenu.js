@@ -59,6 +59,6 @@ Game13.MainMenu.prototype = {
 	},
 
 	startGame: function () {
-		Fade.fadeOut('Game5');
+		Fade.fadeOut('Game');
 	}
 };

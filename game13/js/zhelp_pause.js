@@ -18,11 +18,19 @@ Pause.init = function() {
     pauseText.visible = false;
 		
 	//Add music
-	music = game.add.audio('music');
-	pauseMusic = game.add.audio('pause_music');
-	//music.play('', 0, 0.25, true);
-	pauseMusic.play('', 0, 0.25, true);
-	pauseMusic.pause();
+	if (!music) {
+		music = game.add.audio('music');
+	}
+	if (!pauseMusic) {
+		pauseMusic = game.add.audio('pause_music');
+	}
+	if (!music.isPlaying) {
+		music.play('', 0, 0.15, true);
+	}
+	if (!pauseMusic.isPlaying) {
+		pauseMusic.play('', 0, 0.25, true);
+		pauseMusic.pause();
+	}
 };
 
 Pause.pauseGame = function() {

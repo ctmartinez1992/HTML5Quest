@@ -25,7 +25,7 @@ Game13.GameWin.prototype = {
 			game.add.tween(this.textHigh.scale).to({ x: 1.1, y: 1.1 }, 250).to({ x: 1, y: 1 }, 250).loop().start();
 		}
 		
-        this.textInst = game.add.text(game.camera.width / 2, game.camera.height / 2 + 50, "YOU GOT " + game.score + " BOXES", { font: "18px Chunk", fill: "#ffffff", align: "center" });
+        this.textInst = game.add.text(game.camera.width / 2, game.camera.height / 2 + 50, "YOU WON WITH " + Game13.score + " POINTS", { font: "18px Chunk", fill: "#ffffff", align: "center" });
         this.textInst.anchor.setTo(0.5, 0.5);
 		this.textInst.alpha = 0;
 		this.textInst.fixedToCamera = true;

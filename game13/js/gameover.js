@@ -9,7 +9,7 @@ Game13.GameOver.prototype = {
 		//Background
 		game.stage.backgroundColor = 0x000000;
 		
-        this.textTitle = game.add.text(game.camera.width / 2, 50, "CONGRATULATIONS", { font: "24px Chunk", fill: "#ffffff", align: "center" });
+        this.textTitle = game.add.text(game.camera.width / 2, 50, "Game Over", { font: "24px Chunk", fill: "#ffffff", align: "center" });
         this.textTitle.anchor.setTo(0.5, 0.5);
 		this.textTitle.alpha = 0;
 		this.textTitle.fixedToCamera = true;
@@ -25,7 +25,7 @@ Game13.GameOver.prototype = {
 			game.add.tween(this.textHigh.scale).to({ x: 1.1, y: 1.1 }, 250).to({ x: 1, y: 1 }, 250).loop().start();
 		}
 		
-        this.textInst = game.add.text(game.camera.width / 2, game.camera.height / 2 + 50, "YOU GOT " + game.score + " BOXES", { font: "18px Chunk", fill: "#ffffff", align: "center" });
+        this.textInst = game.add.text(game.camera.width / 2, game.camera.height / 2 + 50, "SCORE: " + Game13.score, { font: "18px Chunk", fill: "#ffffff", align: "center" });
         this.textInst.anchor.setTo(0.5, 0.5);
 		this.textInst.alpha = 0;
 		this.textInst.fixedToCamera = true;

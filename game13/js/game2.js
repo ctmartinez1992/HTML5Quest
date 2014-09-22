@@ -105,6 +105,7 @@ Game13.Game2.prototype = {
 		
 		//Audio
 		this.explosionSound = game.add.audio('explosion');
+		this.shipSound = game.add.audio('shipSound');
 
 		//FPS Text
 		this.game.time.advancedTiming = true;
@@ -217,8 +218,12 @@ Game13.Game2.prototype = {
 		if (this.upInputIsActive()) {
 			this.ship.body.acceleration.x = Math.cos(this.ship.rotation) * SHIP_ACCELERATION;
 			this.ship.body.acceleration.y = Math.sin(this.ship.rotation) * SHIP_ACCELERATION;
+			if (!this.shipSound.isPlaying) {
+				this.shipSound.play('', 0, 0.3, true);
+			}
 		} else {
 			this.ship.body.acceleration.setTo(0, 0);
+			this.shipSound.stop();
 		}
 	},
 	
