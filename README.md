@@ -183,3 +183,16 @@ Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.
 		Programmed in Phaser framework (<a href="http://phaser.io">phaser</a>)<br>
 		Drawn in Paint.NET (<a href="http://www.getpaint.net">Paint.NET</a>)<br>
 		Sounds done at (<a href="http://www.bfxr.net">Bfxr</a>)<br>
+
+=============
+GAME 13 - Landing
+=============
+
+<a href="https://dl.dropboxusercontent.com/u/52790690/HTML5%20GD/game13/index.html">Link to the game</a>
+
+Created, drawn and developed by Carlos Martinez (<a href="http://ctmartinez1992.blogspot.pt">blog</a> and <a href="http://www.youtube.com/channel/UCQ649wgg3_M_C_2HDXkNApQ">channel</a>)<br>
+		Hosted at Github (<a href="https://github.com/ctmartinez1992/HTML5Quest">github</a>)<br>
+		Programmed in Phaser framework (<a href="http://phaser.io">phaser</a>)<br>
+		Drawn in Paint.NET (<a href="http://www.getpaint.net">Paint.NET</a>)<br>
+		Sounds done at (<a href="http://www.bfxr.net">Bfxr</a>)<br>
+		Song is: Pixelated Cosmos by TeknoAXE is licensed under a Creative Commons Attribution 3.0 Unported License.
