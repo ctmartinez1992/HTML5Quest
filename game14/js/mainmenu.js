@@ -12,7 +12,7 @@ Game14.MainMenu.prototype = {
 		Game14.maxlives = 10;
 		Game14.score = 0;
 		
-        this.textTitle = game.add.text(game.camera.width / 2, game.camera.height / 2 - 200, "JUMP", { font: "28px Chunk", fill: "#ffffff", align: "center" });
+        this.textTitle = game.add.text(game.camera.width / 2, game.camera.height / 2 - 200, "IT STARTED RAINING", { font: "28px Chunk", fill: "#ffffff", align: "center" });
         this.textTitle.anchor.setTo(0.5, 0.5);
 		this.textTitle.alpha = 1;
 		
@@ -22,13 +22,13 @@ Game14.MainMenu.prototype = {
 		this.textInst.fixedToCamera = true;
 		game.add.tween(this.textInst).to({ alpha: 1 }, 500, null, false, 1000).start();
 		
-        this.textInst2 = game.add.text(game.camera.width / 2, game.camera.height / 2, "GET TO THE FINISHING LINE", { font: "16px Chunk", fill: "#ffffff", align: "center" });
+        this.textInst2 = game.add.text(game.camera.width / 2, game.camera.height / 2, "QUICKLY GET TO WORK", { font: "16px Chunk", fill: "#ffffff", align: "center" });
         this.textInst2.anchor.setTo(0.5, 0.5);
 		this.textInst2.alpha = 0;
 		this.textInst2.fixedToCamera = true;
 		game.add.tween(this.textInst2).to({ alpha: 1 }, 500, null, false, 1500).start();
 		
-        this.textInst3 = game.add.text(game.camera.width / 2, game.camera.height / 2 + 60, "DONT FALL", { font: "24px Chunk", fill: "#ff3618", align: "center" });
+        this.textInst3 = game.add.text(game.camera.width / 2, game.camera.height / 2 + 60, "STAY ON CAMERA", { font: "24px Chunk", fill: "#ff3618", align: "center" });
         this.textInst3.anchor.setTo(0.5, 0.5);
 		this.textInst3.alpha = 0;
 		game.add.tween(this.textInst3).to({ alpha: 1 }, 500, null, false, 2000).start();

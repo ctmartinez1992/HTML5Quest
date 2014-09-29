@@ -4,7 +4,7 @@ Game14.Game = function (game) {
 
 	var PLAYER_MAX_SPEED = 750;			//Player max speed
 	var PLAYER_ACCELERATION = 1500;		//Player acceleration
-	var PLAYER_DRAG = 1000;				//Player drag, slide coefficient
+	var PLAYER_DRAG = 5000;				//Player drag, slide coefficient
     var PLAYER_JUMP_SPEED = -1200; 		//Player jump
     var PLAYER_JUMP_HOLD = 150;  		//Hold the button for player to jump more
 	var GRAVITY = 2600; 				//Gravity constant
@@ -17,7 +17,7 @@ Game14.Game.prototype = {
 		//juicy juicy
 		this.juicy = this.game.plugins.add(new Phaser.Plugin.Juicy(this));
 		
-		this.game.stage.backgroundColor = 0x666666;
+		this.game.stage.backgroundColor = 0x333333;
 		
 		//Control variables
 		doUpdate = true;
@@ -26,7 +26,31 @@ Game14.Game.prototype = {
 		this.shouldThunder = false;
 		
 		//Arcade physics
-		this.game.physics.arcade.gravity.y = GRAVITY;
+		//this.game.physics.arcade.gravity.y = GRAVITY;
+		
+		//Clouds
+		this.cloudGroup = this.game.add.group();
+		for(var x = -56; x < this.game.width; x += 80) {
+			var cloud = this.game.add.image(x, -30, 'cloud');
+			cloud.scale.setTo(5, 5);
+			cloud.tint = 0xcccccc;
+			cloud.smoothed = false;
+			this.cloudGroup.add(cloud);
+		}
+		
+		//Rain
+		this.emitter = game.add.emitter(400, 0, 1000);
+
+		this.emitter.width = this.game.width + 200;
+		this.emitter.makeParticles('rain');
+		this.emitter.minParticleScale = 0.1;
+		this.emitter.maxParticleScale = 0.5;
+		this.emitter.setYSpeed(1000, 1500);
+		this.emitter.setXSpeed(-5, 5);
+		this.emitter.minRotation = 0;
+		this.emitter.maxRotation = 0;
+		this.emitter.gravity = 100;
+		this.emitter.start(false, 2500, 5, 0);
 
 		//Player controls
 		this.canDoubleJump = true;
@@ -35,7 +59,7 @@ Game14.Game.prototype = {
 		//Map creation
 		this.map = this.game.add.tilemap('map_json');
 		this.map.addTilesetImage('tiles_spritesheet', 'tileset');
-        this.map.setCollisionBetween(0, 10);
+        this.map.setCollisionBetween(0, 200);
 		this.layer = this.map.createLayer('tiles');
 		this.layer.resizeWorld();
 
@@ -43,7 +67,7 @@ Game14.Game.prototype = {
         this.game.score = 0;
 
 		//Player
-        this.player = this.add.sprite(400, 1000, 'player');
+        this.player = this.add.sprite(600, 600, 'player');
 		this.player.anchor.setTo(0.5, 0.5);
 		this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
 		this.player.animations.add('idle', [0]);
@@ -52,6 +76,7 @@ Game14.Game.prototype = {
 		this.player.body.collideWorldBounds = true;
 		this.player.body.maxVelocity.setTo(PLAYER_MAX_SPEED, PLAYER_MAX_SPEED);
 		this.player.body.drag.setTo(PLAYER_DRAG, 0);
+		this.player.body.gravity.y = GRAVITY;
 		
 		//Camera follows player
 		//this.game.camera.follow(this.player);
@@ -75,12 +100,14 @@ Game14.Game.prototype = {
 		this.lightning = this.game.add.image(this.game.width / 2, 80, this.lightningBitmap);
 		this.lightning.filters = [ this.game.add.filter('Glow') ];
 		this.lightning.anchor.setTo(0.5, 0);
-		
+				
 		
 		//Audio
-		//this.winSound = game.add.audio('win_sound');
-		//this.extraSound = game.add.audio('extra_sound');
-		//this.jumpSound = game.add.audio('jump_sound');
+		this.thunderSound1 = this.game.add.audio('thunder');
+		this.thunderSound2 = this.game.add.audio('thunder1');
+		this.thunderSound3 = this.game.add.audio('thunder2');
+		this.rainSound = this.game.add.audio('rain');
+		this.rainSound.play('', 0, 0.25, true);
 
 		//FPS Text
 		this.game.time.advancedTiming = true;
@@ -119,9 +146,21 @@ Game14.Game.prototype = {
 					this.quitGame();
 				}
 				
+				//Check if won
+				if (!this.checkWin()) {
+					this.winGame();
+				}
+				
 				//Update camera
-				this.game.camera.x += 8;
-				this.game.camera.y = this.player.y - 300;
+				this.game.camera.x += 7;
+				this.game.camera.y = this.player.y - this.game.height / 2;
+				
+				//Update clouds
+				this.cloudGroup.x = this.game.camera.x;
+				this.cloudGroup.y = this.game.camera.y;
+				
+				//UPdate rain
+				this.emitter.emitX = this.game.camera.x + (this.game.width - 100);
 
 				//Set collision callbacks
 				this.game.physics.arcade.collide(this.player, this.layer);
@@ -130,8 +169,17 @@ Game14.Game.prototype = {
 				this.updatePlayer();
 				
 				//Lightning
-				this.shouldThunder = (this.game.rnd.integerInRange(1, 100000) > 99900);
+				this.shouldThunder = (this.game.rnd.integerInRange(1, 100000) > 99100);
 				if (this.shouldThunder) {
+				var randomThunderSound = this.game.rnd.integerInRange(1, 100);
+					if (randomThunderSound > 35) {
+						this.thunderSound1.play('', 0, 0.25, false);
+					} else if (randomThunderSound > 70) {
+						this.thunderSound2.play('', 0, 0.25, false);
+					} else {
+						this.thunderSound3.play('', 0, 0.25, false);
+					}					
+					
 					this.lightning.x = this.game.rnd.integerInRange(this.game.camera.x + 200, this.game.camera.x + 600)
 					this.lightning.y = this.game.camera.y - 50;
 				
@@ -261,15 +309,28 @@ Game14.Game.prototype = {
 	},
 	
 	checkAlive: function() {
-		return (this.game.score != 777);
+		return !(this.player.x < this.camera.x);
     },
 
 	quitGame: function () {
 		//Game Over. Go to GameOver Screen
         if (!this.dead) {
             this.dead = true;
-			//this.winSound.play('', 0, 0.5);
+			//this.loseSound.play('', 0, 0.5);
 			Fade.fadeOut('GameOver');
+        }
+	},
+	
+	checkWin: function() {
+		return !(this.player.x > 11000);
+    },
+
+	winGame: function () {
+		//Game Won. Go to GameWin Screen
+        if (!this.dead) {
+            this.dead = true;
+			//this.winSound.play('', 0, 0.5);
+			Fade.fadeOut('GameWin');
         }
 	},
 	

@@ -19,12 +19,18 @@ Game14.Preloader.prototype = {
 		//Images
 		this.load.image('icon_volume', 'assets/icon_volume.png');
 		this.load.image('icon_volume_hover', 'assets/icon_volume_hover.png');
+		this.load.image('rain', 'assets/rain.png');
+		this.load.image('cloud', 'assets/ball.png');
 		this.game.load.spritesheet('player', 'assets/man.png', 32, 32, 5);
 		this.game.load.spritesheet('explosion', 'assets/explosion.png', 128, 128);
 		
 		//Audio
         this.load.audio('music', 'assets/sounds/Pixelated_Cosmos.mp3');
         this.load.audio('pause_music', 'assets/sounds/pause_music.mp3');
+        this.load.audio('rain', 'assets/sounds/rain.mp3');
+        this.load.audio('thunder', 'assets/sounds/thunder.mp3');
+        this.load.audio('thunder1', 'assets/sounds/thunder1.mp3');
+        this.load.audio('thunder2', 'assets/sounds/thunder2.mp3');
 	},
 
 	create: function () {
